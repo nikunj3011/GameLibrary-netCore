@@ -29,5 +29,11 @@ namespace GameLibrary.Controllers
             //throw new InvalidOperationException("404");
             return View();
         }
+
+        [HttpPost("contact")]
+        public IActionResult Contact(object model)
+        { 
+            return View();
+        }
     }
 }

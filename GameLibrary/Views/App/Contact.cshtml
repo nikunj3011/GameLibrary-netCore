@@ -1,2 +1,17 @@
-﻿Hello from Contact
+﻿@{ 
+    ViewBag.Title = "Contact Us";
+}
+
+Hello from Contact
 <br />
+
+<form method="post">
+    <label for="fname">First name:</label><br>
+    <input type="text" id="fname" name="fname"><br>
+    <label for="lname">Last name:</label><br>
+    <input type="text" id="lname" name="lname"><br><br>
+
+    <label for="message">Feedback:</label><br>
+    <input type="text" id="feedback" name="feedback"><br><br>
+    <input type="submit" value="Submit">
+</form>
