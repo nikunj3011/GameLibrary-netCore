@@ -25,6 +25,8 @@ namespace GameLibrary.Controllers
         public IActionResult Contact()
         {
             ViewBag.Title = "Contact Us";
+
+            //throw new InvalidOperationException("404");
             return View();
         }
     }

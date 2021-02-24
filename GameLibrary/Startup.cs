@@ -23,8 +23,14 @@ namespace GameLibrary
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             //app.UseDefaultFiles();
-            if(env.IsEnvironment("Development"))
+            if (env.IsEnvironment("Development")) {
                 app.UseDeveloperExceptionPage();
+            }
+
+            else { 
+                app.UseExceptionHandler("/error");
+            }
+
             app.UseStaticFiles();
             app.UseNodeModules();
             app.UseRouting();
