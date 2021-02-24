@@ -1,2 +1,23 @@
-﻿@RenderBody()
-Title From shared :@ViewBag.Title
+﻿
+@ViewBag.Title
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Game Library</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>
+        Welcome to game Library
+    </h1>
+
+    <menu>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/app/Contact">Contact</a></li>
+            <li><a href="/app/AboutUs">About</a></li>
+        </ul>
+    </menu>
+    @RenderBody()
+</body>
+</html>

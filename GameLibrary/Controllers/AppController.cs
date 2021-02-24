@@ -13,5 +13,16 @@ namespace GameLibrary.Controllers
             //throw new InvalidOperationException();
             return View();
         }
+        public IActionResult AboutUs()
+        {
+            ViewBag.Title = "About Us";
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            ViewBag.Title = "Contact Us";
+            return View();
+        }
     }
 }
