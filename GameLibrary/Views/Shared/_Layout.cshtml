@@ -1,6 +1,4 @@
-﻿
-@ViewBag.Title
-<html>
+﻿<html>
 <head>
     <meta charset="utf-8" />
     <title>Game Library</title>
@@ -13,9 +11,9 @@
 
     <menu>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/app/Contact">Contact</a></li>
-            <li><a href="/app/AboutUs">About</a></li>
+            <li><a asp-controller="App" asp-action="Index">Home</a></li>
+            <li><a asp-controller="App" asp-action="Contact">Contact</a></li>
+            <li><a asp-controller="App" asp-action="AboutUs">About</a></li>
         </ul>
     </menu>
     @RenderBody()

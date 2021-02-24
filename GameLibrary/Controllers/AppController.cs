@@ -13,12 +13,15 @@ namespace GameLibrary.Controllers
             //throw new InvalidOperationException();
             return View();
         }
+
+        [HttpGet("about")]
         public IActionResult AboutUs()
         {
             ViewBag.Title = "About Us";
             return View();
         }
 
+        [HttpGet("contact")]
         public IActionResult Contact()
         {
             ViewBag.Title = "Contact Us";

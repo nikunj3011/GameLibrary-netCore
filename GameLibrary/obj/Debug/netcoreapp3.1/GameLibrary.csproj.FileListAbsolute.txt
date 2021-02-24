@@ -70,3 +70,4 @@ C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibr
 C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibrary\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
 C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibrary\obj\Debug\netcoreapp3.1\Razor\Views\App\AboutUs.cshtml.g.cs
 C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibrary\obj\Debug\netcoreapp3.1\Razor\Views\App\Contact.cshtml.g.cs
+C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibrary\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
