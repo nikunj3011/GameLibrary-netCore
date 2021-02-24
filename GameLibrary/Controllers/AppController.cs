@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameLibrary.Controllers
@@ -31,7 +32,7 @@ namespace GameLibrary.Controllers
         }
 
         [HttpPost("contact")]
-        public IActionResult Contact(object model)
+        public IActionResult Contact(ContactViewModel model)
         { 
             return View();
         }
