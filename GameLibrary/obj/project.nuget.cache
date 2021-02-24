@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "bp+/ScuDNXKOE06+rst17z5glbL+e3G5ZbibivE6TVgQ27ZdcV9elvcQgegQ6KWZ+ewgBdvz3ydm/dFnjoZU6w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\MSI\\Documents\\itgex\\IT-GEX\\sem5\\aspnetcore\\GameLibrary-netCore\\GameLibrary\\GameLibrary.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\MSI\\.nuget\\packages\\odetocode.usenodemodules\\3.0.0\\odetocode.usenodemodules.3.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
