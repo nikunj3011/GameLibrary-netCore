@@ -6,24 +6,39 @@
     <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="~/node_modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
 }
-Hello from Contact
+<div class="container">Hello from Contact</div>
 <br />
 
+<div class="col-md6 offset-md-3">
+    <div class="card card-body bg-light">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly"></div> @*All or ModelOnly*@
 
-<form method="post">
-    <div asp-validation-summary="ModelOnly"></div> @*All or ModelOnly*@
-    <label asp-for="Name">First name:</label><br>
-    <input type="text" asp-for="Name">
-    <span asp-validation-for="Name"></span><br>
+            <div class="form-group">
+                <label asp-for="Name">Name:</label>
+                <input type="text" asp-for="Name" class="form-control">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
 
-    <label asp-for="Email">Last name:</label><br>
-    <input type="text" asp-for="Email">
-    <span asp-validation-for="Email"></span><br>
+            <div class="form-group">
+                <label asp-for="Email">Email:</label>
+                <input type="text" asp-for="Email" class="form-control">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
 
-    <label asp-for="message">Feedback:</label><br>
-    <input type="text" asp-for="message">
-    <span asp-validation-for="message"></span><br><br>
-    <input type="submit" value="Submit">
+            <div class="form-group">
+                <label asp-for="message">Feedback:</label>
+                <textarea rows="4" asp-for="message" class="form-control"></textarea>
+                <span asp-validation-for="message" class="text-danger"></span>
+            </div>
 
-    <div>@ViewBag.UserMessage</div>
-</form>
+            <div class="form-group">
+                <button type="submit" value="Submit" class="btn btn-primary btn-sm"><i class="fa fa-envelope"></i>  Send Message</button>
+            </div>
+
+            <div class="form-group">
+                <div class="text-success">@ViewBag.UserMessage</div>
+            </div>
+        </form>
+    </div>
+</div>
