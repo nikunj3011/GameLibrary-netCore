@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameLibrary.Services;
 using GameLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,12 @@ namespace GameLibrary.Controllers
 {
     public class AppController : Controller
     {
+        private readonly IMailService _mailService;
+
+        public AppController(IMailService mailService)
+        {
+            _mailService = mailService;
+        }
         public IActionResult Index()
         {
             //throw new InvalidOperationException();
@@ -37,6 +44,9 @@ namespace GameLibrary.Controllers
             if (ModelState.IsValid)
             {
                 //send email
+                _mailService.SendMessage("a@a.com", model.Name, $"from: { model.Email} , Message: {model.message}");
+                ViewBag.UserMessage = "Sent mail";
+                ModelState.Clear();
             }
             else
             {
