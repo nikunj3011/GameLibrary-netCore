@@ -9,6 +9,10 @@ namespace GameLibrary.Data
 {
     public class GameContext: DbContext
     {
+        public GameContext(DbContextOptions<GameContext> options): base(options)
+        {
+
+        }
         public DbSet<Library> GameLibraries { get; set; }
         public DbSet<GameShop> GameShops { get; set; }
         public DbSet<GameSystem> GameSystems { get; set; }

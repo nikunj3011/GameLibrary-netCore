@@ -28,7 +28,9 @@ namespace GameLibrary
         {
             //remove default configuration
             builder.Sources.Clear();
-            builder.AddJsonFile("config.json");
+            builder.AddJsonFile("config.json", false, true)
+                   //.AddXmlFile("config.xml", true)
+                   .AddEnvironmentVariables();
         }
     }
 }
