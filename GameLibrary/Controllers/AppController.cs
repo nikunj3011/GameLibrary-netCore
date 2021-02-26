@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameLibrary.Data;
 using GameLibrary.Services;
 using GameLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,12 @@ namespace GameLibrary.Controllers
     public class AppController : Controller
     {
         private readonly IMailService _mailService;
+        private readonly GameContext _context;
 
-        public AppController(IMailService mailService)
+        public AppController(IMailService mailService, GameContext context)
         {
             _mailService = mailService;
+            _context = context;
         }
         public IActionResult Index()
         {
@@ -53,6 +56,17 @@ namespace GameLibrary.Controllers
                 //show errors
             }
             return View();
+        }
+
+        public IActionResult Shop()
+        {
+            var results = from p in _context.GameLibraries
+                          orderby p.Name
+                          select p; //linq syntax
+
+
+            //var results =_context.GameLibraries.OrderBy(p=>p.Name).ToList();  //fluid syntax we can do either
+            return View(results.ToList()); 
         }
     }
 }

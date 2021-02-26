@@ -1,0 +1,54 @@
+﻿@model GameLibrary.Data.Entities.GameShop
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>GameShop</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GameShopName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GameShopName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GameLibrary)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GameLibrary.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GameSystem)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GameSystem.SystemName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.GameShopID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

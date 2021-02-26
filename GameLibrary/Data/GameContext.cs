@@ -16,5 +16,15 @@ namespace GameLibrary.Data
         public DbSet<Library> GameLibraries { get; set; }
         public DbSet<GameShop> GameShops { get; set; }
         public DbSet<GameSystem> GameSystems { get; set; }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
+        //    modelBuilder.Entity<Library>()
+        //        .HasData(new Library()
+        //        {
+
+        //        });
+        //}
     }
 }

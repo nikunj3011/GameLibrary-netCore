@@ -1,0 +1,65 @@
+﻿@model IEnumerable<GameLibrary.Data.Entities.GameShop>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GameShopName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GameLibrary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GameSystem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameShopName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameLibrary.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GameSystem.SystemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.GameShopID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.GameShopID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.GameShopID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

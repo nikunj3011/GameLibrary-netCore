@@ -26,8 +26,15 @@ using GameLibrary.ViewModels;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibrary\Views\_ViewImports.cshtml"
+using GameLibrary.Data.Entities;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"5ddfd4fff657c15ee3e7a30eac4db9460f565625", @"/Views/App/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"959a006759c9d7394cade3ca67c5e88714aa9643", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7a5161542c661c0c7f8337434ee8a12c306bef21", @"/Views/_ViewImports.cshtml")]
     public class Views_App_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998
