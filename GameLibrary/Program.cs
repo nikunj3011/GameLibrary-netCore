@@ -18,9 +18,17 @@ namespace GameLibrary
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(SetupConfiguration)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        private static void SetupConfiguration(HostBuilderContext ctx, IConfigurationBuilder builder)
+        {
+            //remove default configuration
+            builder.Sources.Clear();
+            builder.AddJsonFile("config.json");
+        }
     }
 }

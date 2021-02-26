@@ -49,8 +49,6 @@ C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibr
 C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibrary\obj\Debug\netcoreapp3.1\GameLibrary.csprojAssemblyReference.cache
 C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibrary\obj\Debug\netcoreapp3.1\GameLibrary.AssemblyInfoInputs.cache
 C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibrary\obj\Debug\netcoreapp3.1\GameLibrary.AssemblyInfo.cs
-C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibrary\obj\Debug\netcoreapp3.1\GameLibrary.csproj.CoreCompileInputs.cache
-C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibrary\obj\Debug\netcoreapp3.1\GameLibrary.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibrary\obj\Debug\netcoreapp3.1\GameLibrary.RazorAssemblyInfo.cache
 C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibrary\obj\Debug\netcoreapp3.1\GameLibrary.RazorAssemblyInfo.cs
 C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibrary\obj\Debug\netcoreapp3.1\GameLibrary.TagHelpers.input.cache
