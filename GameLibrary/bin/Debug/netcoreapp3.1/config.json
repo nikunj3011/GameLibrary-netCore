@@ -1,5 +1,0 @@
-﻿{
-  "ConnectionStrings": {
-    "GameConnectionString": "server=NIKUNJ;Database=GameStoreDb;Integrated Security=true;MultipleActiveResultSets=true;"
-  }
-}
