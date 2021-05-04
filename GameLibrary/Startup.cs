@@ -30,6 +30,11 @@ namespace GameLibrary
             {
                 cfg.UseSqlServer(_config.GetConnectionString("GameConnectionString"));
             });
+
+            services.AddTransient<GameSeeder>();
+
+            services.AddScoped<IGameRepository, GameRepository>(); 
+
             services.AddTransient<IMailService, NullMailService>();
             //support for real mail afterwards
             services.AddControllersWithViews();

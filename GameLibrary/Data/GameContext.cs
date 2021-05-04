@@ -20,6 +20,9 @@ namespace GameLibrary.Data
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
         //    base.OnModelCreating(modelBuilder);
+        //    //we can edit and specify how each column should be like and its properties
+        //    modelBuilder.Entity<Library>().Property(p => p.Name).HasMaxLength(50);
+        //    seeds the data
         //    modelBuilder.Entity<Library>()
         //        .HasData(new Library()
         //        {

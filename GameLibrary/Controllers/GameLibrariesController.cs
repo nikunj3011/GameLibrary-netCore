@@ -7,23 +7,33 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GameLibrary.Data;
 using GameLibrary.Data.Entities;
+using GameLibrary.Services;
 
 namespace GameLibrary.Controllers
 {
     public class LibrariesController : Controller
     {
-        private readonly GameContext _context;
+        private readonly IGameRepository gameRepository;
+        private readonly GameContext context;
+        private readonly IMailService mailService;
 
-        public LibrariesController(GameContext context)
+        public LibrariesController(IGameRepository gameRepository, GameContext context,IMailService mailService)
         {
-            _context = context;
+            this.gameRepository = gameRepository;
+            this.context = context;
+            this.mailService = mailService;
         }
 
         // GET: Libraries
         public async Task<IActionResult> Index()
         {
-            var gameContext = _context.GameLibraries.Include(l => l.GameSystems);
-            return View(await gameContext.ToListAsync());
+            var games = gameRepository.GetGameLibraries();
+            //fluent syntax
+            //var gameContext2 = context.GameLibraries.OrderBy(p => p.Name).ToList();
+            //linq
+            //var gameContext3 = from p in context.GameLibraries orderby p.Name select p;
+            //return View(gameContext3.ToList());
+            return View(games);
         }
 
         // GET: Libraries/Details/5
@@ -34,7 +44,7 @@ namespace GameLibrary.Controllers
                 return NotFound();
             }
 
-            var library = await _context.GameLibraries
+            var library = await context.GameLibraries
                 .Include(l => l.GameSystems)
                 .FirstOrDefaultAsync(m => m.GameLibraryID == id);
             if (library == null)
@@ -48,7 +58,7 @@ namespace GameLibrary.Controllers
         // GET: Libraries/Create
         public IActionResult Create()
         {
-            ViewData["GameSystemID"] = new SelectList(_context.GameSystems, "GameSystemID", "SystemName");
+            ViewData["GameSystemID"] = new SelectList(context.GameSystems, "GameSystemID", "SystemName");
             return View();
         }
 
@@ -61,11 +71,11 @@ namespace GameLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(library);
-                await _context.SaveChangesAsync();
+                context.Add(library);
+                await context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GameSystemID"] = new SelectList(_context.GameSystems, "GameSystemID", "SystemName", library.GameSystemID);
+            ViewData["GameSystemID"] = new SelectList(context.GameSystems, "GameSystemID", "SystemName", library.GameSystemID);
             return View(library);
         }
 
@@ -77,12 +87,12 @@ namespace GameLibrary.Controllers
                 return NotFound();
             }
 
-            var library = await _context.GameLibraries.FindAsync(id);
+            var library = await context.GameLibraries.FindAsync(id);
             if (library == null)
             {
                 return NotFound();
             }
-            ViewData["GameSystemID"] = new SelectList(_context.GameSystems, "GameSystemID", "SystemName", library.GameSystemID);
+            ViewData["GameSystemID"] = new SelectList(context.GameSystems, "GameSystemID", "SystemName", library.GameSystemID);
             return View(library);
         }
 
@@ -102,8 +112,8 @@ namespace GameLibrary.Controllers
             {
                 try
                 {
-                    _context.Update(library);
-                    await _context.SaveChangesAsync();
+                    context.Update(library);
+                    await context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -118,7 +128,7 @@ namespace GameLibrary.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GameSystemID"] = new SelectList(_context.GameSystems, "GameSystemID", "SystemName", library.GameSystemID);
+            ViewData["GameSystemID"] = new SelectList(context.GameSystems, "GameSystemID", "SystemName", library.GameSystemID);
             return View(library);
         }
 
@@ -130,7 +140,7 @@ namespace GameLibrary.Controllers
                 return NotFound();
             }
 
-            var library = await _context.GameLibraries
+            var library = await context.GameLibraries
                 .Include(l => l.GameSystems)
                 .FirstOrDefaultAsync(m => m.GameLibraryID == id);
             if (library == null)
@@ -146,15 +156,15 @@ namespace GameLibrary.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var library = await _context.GameLibraries.FindAsync(id);
-            _context.GameLibraries.Remove(library);
-            await _context.SaveChangesAsync();
+            var library = await context.GameLibraries.FindAsync(id);
+            context.GameLibraries.Remove(library);
+            await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool LibraryExists(int id)
         {
-            return _context.GameLibraries.Any(e => e.GameLibraryID == id);
+            return context.GameLibraries.Any(e => e.GameLibraryID == id);
         }
     }
 }

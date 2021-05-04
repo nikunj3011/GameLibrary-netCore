@@ -28,7 +28,8 @@ namespace GameLibrary.Data
         //        //create data
         //        var filepath = Path.Combine(_hosting.ContentRootPath,"Data/file.json");
         //        var json = File.ReadAllText(filepath);
-        //        var games = JsonConvert.DeserializeObject<IEnumerable<Library>>(json);
+        //        var games = JsonSerializer.DeserializeObject<IEnumerable<Library>>(json);
+        //var GameSystem = new GameSystem { CreationDate = DateTime.Today, GameLibrary = new List<Library>() {new Library(){library=Library.First() };/*new Library { GameSystemID=1, CreationDate=DateTime.Now, Description="abcd", DiscType="Digital", GameLibraryID=1, GameSystems=null, Name="Spiderman", Rating=4}*/, GameSystemID = 1, SystemName = "PS4" };
         //        _ctx.GameLibraries.AddRange(games);
         //        _ctx.SaveChanges();
         //    }
