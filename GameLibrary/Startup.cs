@@ -60,6 +60,9 @@ namespace GameLibrary
                 cfg.MapControllerRoute("Fallback",
                     "{controller}/{action}/{id?}",
                     new { controller = "App", action = "Index" });
+                cfg.MapControllerRoute("API",
+                    "api/{controller}",
+                    new { controller = "GameAPI", action = "Get" });
             });
         }
     }
