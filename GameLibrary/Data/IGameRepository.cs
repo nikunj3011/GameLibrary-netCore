@@ -12,6 +12,6 @@ namespace GameLibrary.Data
         GameSystem GetGameSystemsById(int id);
 
         public bool SaveAll();
-        
+        void AddEntity(object model); //add any type of data
     }
 }

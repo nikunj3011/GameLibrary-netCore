@@ -18,6 +18,12 @@ namespace GameLibrary.Data
             this.gameContext = gameContext;
             this.logger = logger;
         }
+
+        public void AddEntity(object model)
+        {
+            gameContext.Add(model);
+        }
+
         public IEnumerable<Library> GetGameLibraries()
         {
             try

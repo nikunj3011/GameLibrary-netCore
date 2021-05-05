@@ -64,5 +64,24 @@ namespace GameLibrary.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult Post([FromBody]GameSystem gameSystem)
+        {
+            //add it to database
+            try
+            {
+                gameRepository.AddEntity(gameSystem);
+                if (gameRepository.SaveAll())
+                {
+                    return Created($"/api/GameSystem/{gameSystem.GameSystemID}", gameSystem);
+                }
+            }
+            catch(Exception ex)
+            {
+                logger.LogError($"Failed to save game system:{ex}");
+            }
+            return BadRequest("Failed to save game system");
+        }
+
     }
 }
