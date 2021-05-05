@@ -34,13 +34,13 @@ namespace GameLibrary.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         //public IEnumerable<Library> Get()
-        public ActionResult<IEnumerable<Games>> Get() 
+        public ActionResult<IEnumerable<GameSystem>> Get(bool includeItems=true) 
         {
             try
             {
                 logger.LogInformation($"game system  api called.");
                 //return Ok(gameRepository.GetGameSystems()); 
-                var result = gameRepository.GetGameSystems();
+                var result = gameRepository.GetGameSystems(includeItems);
                 return Ok(mapper.Map<IEnumerable<GameSystemAPIViewModel>>(result));
 
             }

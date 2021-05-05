@@ -8,7 +8,7 @@ namespace GameLibrary.Data
         IEnumerable<Games> GetGameLibraries();
         IEnumerable<Games> GetGameLibrariesByName(string name);
 
-        IEnumerable<GameSystem> GetGameSystems();
+        IEnumerable<GameSystem> GetGameSystems(bool includeItems);
         GameSystem GetGameSystemsById(int id);
 
         public bool SaveAll();
