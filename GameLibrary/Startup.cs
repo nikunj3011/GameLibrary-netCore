@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using GameLibrary.Data;
 using GameLibrary.Services;
@@ -37,6 +38,8 @@ namespace GameLibrary
             services.AddScoped<IGameRepository, GameRepository>(); 
 
             services.AddTransient<IMailService, NullMailService>();
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             //support for real mail afterwards
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(cfg=>cfg.SerializerSettings

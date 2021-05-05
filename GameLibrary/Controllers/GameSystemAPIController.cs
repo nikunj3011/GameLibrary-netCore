@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using GameLibrary.Data;
 using GameLibrary.Data.Entities;
 using GameLibrary.Services;
@@ -18,12 +19,15 @@ namespace GameLibrary.Controllers
     public class GameSystemAPIController : Controller
     { 
         private readonly ILogger<GameAPIController> logger;
-        private readonly IGameRepository gameRepository; 
+        private readonly IGameRepository gameRepository;
+        private readonly IMapper mapper;
 
-        public GameSystemAPIController(ILogger<GameAPIController> logger, IGameRepository gameRepository)
+        public GameSystemAPIController(ILogger<GameAPIController> logger, 
+            IGameRepository gameRepository, IMapper mapper)
         { 
             this.logger = logger;
-            this.gameRepository = gameRepository; 
+            this.gameRepository = gameRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet]  
@@ -35,7 +39,9 @@ namespace GameLibrary.Controllers
             try
             {
                 logger.LogInformation($"game system  api called.");
-                return Ok(gameRepository.GetGameSystems()); 
+                //return Ok(gameRepository.GetGameSystems()); 
+                var result = gameRepository.GetGameSystems();
+                return Ok(mapper.Map<IEnumerable<GameSystemAPIViewModel>>(result));
 
             }
             catch (Exception ex)
@@ -53,7 +59,7 @@ namespace GameLibrary.Controllers
                 logger.LogInformation($"game system  api called.");
                 var gameSystem = gameRepository.GetGameSystemsById(id);
 
-                if (gameSystem != null) return Ok(gameSystem);
+                if (gameSystem != null) return Ok(mapper.Map<GameSystem,GameSystemAPIViewModel>(gameSystem));
                 else return NotFound(); 
 
             }
@@ -65,15 +71,46 @@ namespace GameLibrary.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]GameSystem gameSystem)
+        public IActionResult Post([FromBody]GameSystemAPIViewModel gameSystem)
         {
             //add it to database
             try
             {
-                gameRepository.AddEntity(gameSystem);
-                if (gameRepository.SaveAll())
+                if (ModelState.IsValid)
                 {
-                    return Created($"/api/GameSystem/{gameSystem.GameSystemID}", gameSystem);
+                    //var newGameSystem = new GameSystem()
+                    //{
+                    //    CreationDate = gameSystem.CreationDate,
+                    //    GameSystemID = gameSystem.GameSystemAPIID,
+                    //    SystemName = gameSystem.SystemNameAPI,
+                    //    GameLibrary = gameSystem.GameLibrary
+                    //};
+
+                    //using Automapper
+                    var newGameSystem = mapper.Map<GameSystemAPIViewModel, GameSystem>(gameSystem);
+
+                    if (newGameSystem.CreationDate == DateTime.MinValue)
+                    {
+                        newGameSystem.CreationDate = DateTime.Now;
+                    }
+                    gameRepository.AddEntity(newGameSystem);
+                    if (gameRepository.SaveAll())
+                    {
+                        //var vm = new GameSystemAPIViewModel()
+                        //{
+                        //    CreationDate = newGameSystem.CreationDate,
+                        //    GameSystemAPIID = newGameSystem.GameSystemID,
+                        //    SystemNameAPI = newGameSystem.SystemName,
+                        //    GameLibrary = gameSystem.GameLibrary
+                        //};
+
+                        //using Automapper
+                        return Created($"/api/GameSystem/{newGameSystem.GameSystemID}", mapper.Map<GameSystem,GameSystemAPIViewModel>(newGameSystem));
+                    }
+                }
+                else
+                {
+                    return BadRequest(ModelState);
                 }
             }
             catch(Exception ex)
