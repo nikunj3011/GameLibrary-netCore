@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using GameLibrary.Data.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
-namespace GameLibrary.Data.Entities
+namespace GameLibrary.ViewModels
 {
-    public class Library
+    public class GamesViewModel
     {
-        [Key]
         public int GameLibraryID { get; set; }
 
         [Required]
@@ -22,10 +18,10 @@ namespace GameLibrary.Data.Entities
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-        [Required]
-        [Display(Name = "Game System")]
-        public int GameSystemID { get; set; }
-        public virtual GameSystem GameSystems { get; set; }
+        //[Required]
+        //[Display(Name = "Game System")]
+        //public int GameSystemID { get; set; }
+        //public virtual GameSystem GameSystems { get; set; }
 
         [Required]
         [Display(Name = "Rating")]
@@ -36,7 +32,7 @@ namespace GameLibrary.Data.Entities
         [Display(Name = "Disc Type")]
         public string DiscType { get; set; }
 
-        [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [Required]
         public DateTime CreationDate { get; set; }
     }
 }

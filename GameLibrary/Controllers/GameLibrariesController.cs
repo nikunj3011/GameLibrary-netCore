@@ -67,7 +67,7 @@ namespace GameLibrary.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GameLibraryID,Name,Description,GameSystemID,Rating,DiscType,CreationDate")] Library library)
+        public async Task<IActionResult> Create([Bind("GameLibraryID,Name,Description,GameSystemID,Rating,DiscType,CreationDate")] Games library)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace GameLibrary.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GameLibraryID,Name,Description,GameSystemID,Rating,DiscType,CreationDate")] Library library)
+        public async Task<IActionResult> Edit(int id, [Bind("GameLibraryID,Name,Description,GameSystemID,Rating,DiscType,CreationDate")] Games library)
         {
             if (id != library.GameLibraryID)
             {

@@ -15,6 +15,9 @@ namespace GameLibrary.Data
             CreateMap<GameSystem, GameSystemAPIViewModel>()
                 .ForMember(p=>p.GameSystemAPIID, ex=>ex.MapFrom(p=>p.GameSystemID))
                 .ReverseMap();
+
+            CreateMap<Games, GamesViewModel>()
+                .ReverseMap();
         }
     }
 }

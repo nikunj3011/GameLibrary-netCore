@@ -34,7 +34,7 @@ namespace GameLibrary.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         //public IEnumerable<Library> Get()
-        public ActionResult<IEnumerable<Library>> Get() 
+        public ActionResult<IEnumerable<Games>> Get() 
         {
             try
             {

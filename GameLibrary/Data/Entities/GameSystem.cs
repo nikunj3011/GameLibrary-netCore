@@ -18,7 +18,7 @@ namespace GameLibrary.Data.Entities
         [MaxLength(64, ErrorMessage = "Name can't be logner than 64 Characters")]
         public string SystemName { get; set; }
 
-        public virtual ICollection<Library> GameLibrary { get; set; }
+        public virtual ICollection<Games> GameLibrary { get; set; }
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreationDate { get; set; }

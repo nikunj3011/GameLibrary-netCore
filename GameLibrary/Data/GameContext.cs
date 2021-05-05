@@ -13,7 +13,7 @@ namespace GameLibrary.Data
         {
 
         }
-        public DbSet<Library> GameLibraries { get; set; }
+        public DbSet<Games> GameLibraries { get; set; }
         public DbSet<GameShop> GameShops { get; set; }
         public DbSet<GameSystem> GameSystems { get; set; }
 

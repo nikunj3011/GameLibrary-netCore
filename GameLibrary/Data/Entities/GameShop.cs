@@ -20,7 +20,7 @@ namespace GameLibrary.Data.Entities
 
         [Required]
         public int GameLibraryID { get; set; }
-        public Library GameLibrary { get; set; }
+        public Games GameLibrary { get; set; }
 
         [Required]
         public int GameSystemID { get; set; }

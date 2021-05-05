@@ -24,12 +24,18 @@ namespace GameLibrary.Data
             gameContext.Add(model);
         }
 
-        public IEnumerable<Library> GetGameLibraries()
+        public Games GetGameById(int gameid)
+        {
+            return gameContext.GameLibraries.Include(p => p.GameSystems)/*.ThenInclude(p=>p.GameSystemID)*/
+                .Where(p => p.GameLibraryID == gameid).FirstOrDefault();
+        }
+
+        public IEnumerable<Games> GetGameLibraries()
         {
             try
             {
                 logger.LogInformation("Get All products");
-                return gameContext.GameLibraries.OrderBy(p => p.Name).ToList();
+                return gameContext.GameLibraries.Include(p => p.GameSystems).OrderBy(p => p.Name).ToList();
             }
             catch(Exception ex)
             {
@@ -39,7 +45,7 @@ namespace GameLibrary.Data
             
         }
 
-        public IEnumerable<Library> GetGameLibrariesByName(string name)
+        public IEnumerable<Games> GetGameLibrariesByName(string name)
         {
             return gameContext.GameLibraries.Include(p => p.GameSystems).Where(p => p.Name == name).ToList();
         }

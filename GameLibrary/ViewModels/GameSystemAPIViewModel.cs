@@ -16,7 +16,7 @@ namespace GameLibrary.ViewModels
         [MaxLength(64, ErrorMessage = "Name can't be logner than 64 Characters api")]
         public string SystemName { get; set; }
 
-        public virtual ICollection<Library> GameLibrary { get; set; }
+        public virtual ICollection<GamesViewModel> GameLibrary { get; set; }
 
         [Required]
         public DateTime CreationDate { get; set; }
