@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 
 namespace GameLibrary
 {
@@ -37,7 +38,9 @@ namespace GameLibrary
 
             services.AddTransient<IMailService, NullMailService>();
             //support for real mail afterwards
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(cfg=>cfg.SerializerSettings
+                                    .ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,9 +63,9 @@ namespace GameLibrary
                 cfg.MapControllerRoute("Fallback",
                     "{controller}/{action}/{id?}",
                     new { controller = "App", action = "Index" });
-                cfg.MapControllerRoute("API",
-                    "api/{controller}",
-                    new { controller = "GameAPI", action = "Get" });
+                //cfg.MapControllerRoute("API",
+                //    "api/{controller}",
+                //    new { controller = "GameAPI", action = "Get" });
             });
         }
     }

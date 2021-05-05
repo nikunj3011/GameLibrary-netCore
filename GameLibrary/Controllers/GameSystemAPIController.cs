@@ -15,12 +15,12 @@ namespace GameLibrary.Controllers
     [ApiController] //tells this is an api controller
     [Produces("application/json")] //tells that this controller returns json
 
-    public class GameAPIController : Controller
+    public class GameSystemAPIController : Controller
     { 
         private readonly ILogger<GameAPIController> logger;
         private readonly IGameRepository gameRepository; 
 
-        public GameAPIController(ILogger<GameAPIController> logger, IGameRepository gameRepository)
+        public GameSystemAPIController(ILogger<GameAPIController> logger, IGameRepository gameRepository)
         { 
             this.logger = logger;
             this.gameRepository = gameRepository; 
@@ -34,15 +34,34 @@ namespace GameLibrary.Controllers
         {
             try
             {
-                logger.LogInformation($"game api called.");
-                return Ok(gameRepository.GetGameLibraries()); 
+                logger.LogInformation($"game system  api called.");
+                return Ok(gameRepository.GetGameSystems()); 
 
             }
             catch (Exception ex)
             {
-                logger.LogInformation($"Failed to get games: {ex}");
-                return BadRequest("Failed to get games");
+                logger.LogInformation($"Failed to get game system: {ex}");
+                return BadRequest("Failed to get game system");
             } 
+        }
+
+        [HttpGet("{id:int}")]
+        public IActionResult Get(int id)
+        {
+            try
+            {
+                logger.LogInformation($"game system  api called.");
+                var gameSystem = gameRepository.GetGameSystemsById(id);
+
+                if (gameSystem != null) return Ok(gameSystem);
+                else return NotFound(); 
+
+            }
+            catch (Exception ex)
+            {
+                logger.LogInformation($"Failed to get game system: {ex}");
+                return BadRequest("Failed to get game system");
+            }
         }
 
     }

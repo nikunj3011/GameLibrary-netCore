@@ -35,9 +35,21 @@ namespace GameLibrary.Data
 
         public IEnumerable<Library> GetGameLibrariesByName(string name)
         {
-            return gameContext.GameLibraries.Where(p => p.Name == name).ToList();
+            return gameContext.GameLibraries.Include(p => p.GameSystems).Where(p => p.Name == name).ToList();
         }
-         
+
+        public IEnumerable<GameSystem> GetGameSystems()
+        {
+            return gameContext.GameSystems.Include(p => p.GameLibrary)/*.ThenInclude(p=>p.GameSystemID)*/
+                .ToList();
+        }
+
+        public GameSystem GetGameSystemsById(int id)
+        {
+            return gameContext.GameSystems.Include(p => p.GameLibrary)/*.ThenInclude(p=>p.GameSystemID)*/
+                .Where(p => p.GameSystemID == id).FirstOrDefault();
+        }
+
         public bool SaveAll()
         {
             return gameContext.SaveChanges()>0;

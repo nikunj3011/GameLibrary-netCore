@@ -7,6 +7,11 @@ namespace GameLibrary.Data
     {
         IEnumerable<Library> GetGameLibraries();
         IEnumerable<Library> GetGameLibrariesByName(string name);
+
+        IEnumerable<GameSystem> GetGameSystems();
+        GameSystem GetGameSystemsById(int id);
+
         public bool SaveAll();
+        
     }
 }
