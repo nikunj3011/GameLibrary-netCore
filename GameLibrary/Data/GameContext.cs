@@ -1,4 +1,5 @@
 ﻿using GameLibrary.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GameLibrary.Data
 {
-    public class GameContext: DbContext
+    public class GameContext: IdentityDbContext<StoreUser>
     {
         public GameContext(DbContextOptions<GameContext> options): base(options)
         {

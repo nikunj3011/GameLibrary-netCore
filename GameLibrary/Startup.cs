@@ -4,10 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using GameLibrary.Data;
+using GameLibrary.Data.Entities;
 using GameLibrary.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +40,8 @@ namespace GameLibrary
             services.AddScoped<IGameRepository, GameRepository>(); 
 
             services.AddTransient<IMailService, NullMailService>();
-
+            //IdentityBuilder.AddEntityFrameworkStores<ApplicationDbContext, Guid>();
+            //services.AddIdentity<GameContext, StoreUser>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             //support for real mail afterwards
             services.AddControllersWithViews()
