@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GameLibrary.Data;
 using GameLibrary.Services;
 using GameLibrary.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameLibrary.Controllers
@@ -58,6 +59,7 @@ namespace GameLibrary.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Shop()
         {
             var results = from p in _context.GameLibraries
