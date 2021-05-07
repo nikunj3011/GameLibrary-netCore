@@ -50,6 +50,20 @@ namespace GameLibrary.Data
             return gameContext.GameLibraries.Include(p => p.GameSystems).Where(p => p.Name == name).ToList();
         }
 
+        public IEnumerable<GameSystem> GetGameLibrariesByName(string name, bool includeItems)
+        {
+            //return gameContext.GameSystems.Include(p => p).Where(p => p.Name == name).ToList();
+            if (includeItems)
+            {
+                return gameContext.GameSystems.Where(p=>p.user.UserName==name).Include(p => p.GameLibrary)/*.ThenInclude(p=>p.GameSystemID)*/
+                                .ToList();
+            }
+            else
+            {
+                return gameContext.GameSystems.ToList();
+            }
+        }
+
         public IEnumerable<GameSystem> GetGameSystems(bool includeItems)
         {
             if (includeItems)

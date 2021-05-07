@@ -29,23 +29,44 @@ namespace GameLibrary.Controllers
             this.gameRepository = gameRepository; 
         }
 
-        [HttpGet]  
+        //[HttpGet]  
+        //[ProducesResponseType(200)]
+        //[ProducesResponseType(400)]
+        ////public IEnumerable<Library> Get()
+        //public ActionResult<IEnumerable<Games>> Get() 
+        //{
+        //    try
+        //    {
+        //        logger.LogInformation($"game api called.");
+        //        return Ok(gameRepository.GetGameLibraries()); 
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logger.LogInformation($"Failed to get games: {ex}");
+        //        return BadRequest("Failed to get games");
+        //    } 
+        //}
+
+        [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         //public IEnumerable<Library> Get()
-        public ActionResult<IEnumerable<Games>> Get() 
+        public ActionResult<IEnumerable<GameSystem>> GetByName(bool includeItems)
         {
             try
             {
+                var username = User.Identity.Name;
+                var results = gameRepository.GetGameLibrariesByName(username, includeItems);
                 logger.LogInformation($"game api called.");
-                return Ok(gameRepository.GetGameLibraries()); 
+                return Ok(results);
 
             }
             catch (Exception ex)
             {
                 logger.LogInformation($"Failed to get games: {ex}");
                 return BadRequest("Failed to get games");
-            } 
+            }
         }
 
     }

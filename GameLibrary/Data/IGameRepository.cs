@@ -6,7 +6,7 @@ namespace GameLibrary.Data
     public interface IGameRepository
     {
         IEnumerable<Games> GetGameLibraries();
-        IEnumerable<Games> GetGameLibrariesByName(string name);
+        IEnumerable<GameSystem> GetGameLibrariesByName(string name, bool includeItems);
 
         IEnumerable<GameSystem> GetGameSystems(bool includeItems);
         GameSystem GetGameSystemsById(int id);
