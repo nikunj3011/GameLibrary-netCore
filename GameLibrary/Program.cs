@@ -23,7 +23,7 @@ namespace GameLibrary
         private static void RunSeeding(IHost host)
         {
             var seeder = host.Services.GetService<GameSeeder>();
-            //seeder.Seed();
+            seeder.SeedAsync().Wait();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

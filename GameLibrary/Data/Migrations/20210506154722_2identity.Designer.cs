@@ -4,14 +4,16 @@ using GameLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GameLibrary.Migrations
 {
     [DbContext(typeof(GameContext))]
-    partial class GameContextModelSnapshot : ModelSnapshot
+    [Migration("20210506154722_2identity")]
+    partial class _2identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,12 +75,7 @@ namespace GameLibrary.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("userId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("GameSystemID");
-
-                    b.HasIndex("userId");
 
                     b.ToTable("GameSystems");
                 });
@@ -339,15 +336,6 @@ namespace GameLibrary.Migrations
                     b.Navigation("GameLibrary");
 
                     b.Navigation("GameSystem");
-                });
-
-            modelBuilder.Entity("GameLibrary.Data.Entities.GameSystem", b =>
-                {
-                    b.HasOne("GameLibrary.Data.Entities.StoreUser", "user")
-                        .WithMany()
-                        .HasForeignKey("userId");
-
-                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("GameLibrary.Data.Entities.Games", b =>
