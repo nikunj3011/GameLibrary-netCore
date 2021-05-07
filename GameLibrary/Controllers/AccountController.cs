@@ -22,11 +22,18 @@ namespace GameLibrary.Controllers
         }
         public IActionResult Login()
         {
-            if(this.User.Identity.IsAuthenticated)
+            if (this.User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "App");
             }
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "App");            
         }
 
         [HttpPost]
