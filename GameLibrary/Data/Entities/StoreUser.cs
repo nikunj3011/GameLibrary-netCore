@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameLibrary.Data.Entities
 {
-    public class StoreUser : IdentityUser
+    public class StoreUser: IdentityUser
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GameLibrary.Data;
-using GameLibrary.Data.Entities;
 using GameLibrary.Services;
 using GameLibrary.ViewModels;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameLibrary.Controllers
@@ -16,34 +13,14 @@ namespace GameLibrary.Controllers
     {
         private readonly IMailService _mailService;
         private readonly GameContext _context;
-        private readonly UserManager<StoreUser> userManager;
 
-        public AppController(IMailService mailService, GameContext context,UserManager<StoreUser> userManager)
+        public AppController(IMailService mailService, GameContext context)
         {
             _mailService = mailService;
             _context = context;
-            this.userManager = userManager;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            //StoreUser user = await userManager.FindByEmailAsync("shawn@dutchtreat.com");
-
-            //if (user == null)
-            //{
-            //    user = new StoreUser()
-            //    {
-            //        FirstName = "Nikunj",
-            //        LastName = "Rathod",
-            //        Email = "nikunj@rathod.com",
-            //        UserName = "nikunj3011"
-            //    };
-
-            //    var result = await userManager.CreateAsync(user, "P@ssw0rd!");
-            //    if (result != IdentityResult.Success)
-            //    {
-            //        throw new InvalidOperationException("Could not create new user in Seeder");
-            //    }
-            //}
             //throw new InvalidOperationException();
             return View();
         }
@@ -81,7 +58,6 @@ namespace GameLibrary.Controllers
             return View();
         }
 
-        [Authorize]
         public IActionResult Shop()
         {
             var results = from p in _context.GameLibraries

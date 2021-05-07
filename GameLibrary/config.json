@@ -7,11 +7,5 @@
       "Default": "Information",
       "Microsoft": "Warning"
     }
-  },
-  "Token": {
-    "Key": ";aaa;aaa;aaa;aaa;aaa;",
-    "Issuer": "https://localhost:44376/",
-    "Audience": "https://localhost:44376/"
-  }
-
+  } 
 }
