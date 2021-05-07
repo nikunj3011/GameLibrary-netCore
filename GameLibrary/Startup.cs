@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using GameLibrary.Data;
 using GameLibrary.Data.Entities;
@@ -14,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
 namespace GameLibrary
@@ -30,6 +32,24 @@ namespace GameLibrary
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<StoreUser, IdentityRole>(cfg=>
+            {
+                cfg.User.RequireUniqueEmail = true;
+
+            })
+                .AddEntityFrameworkStores<GameContext>();
+
+            services.AddAuthentication().AddCookie()
+                .AddJwtBearer(cfg=>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = _config["Token:Issuer"],
+                        ValidAudience = _config["Token:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Token:Key"]))
+                    };
+                });
+
             services.AddDbContext<GameContext>(cfg=>
             {
                 cfg.UseSqlServer(_config.GetConnectionString("GameConnectionString"));
@@ -40,8 +60,7 @@ namespace GameLibrary
             services.AddScoped<IGameRepository, GameRepository>(); 
 
             services.AddTransient<IMailService, NullMailService>();
-            //IdentityBuilder.AddEntityFrameworkStores<ApplicationDbContext, Guid>();
-            //services.AddIdentity<GameContext, StoreUser>();
+
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             //support for real mail afterwards
             services.AddControllersWithViews()
@@ -64,6 +83,8 @@ namespace GameLibrary
             app.UseStaticFiles();
             app.UseNodeModules();
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(cfg=>
             {
                 cfg.MapControllerRoute("Fallback",

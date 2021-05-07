@@ -6,12 +6,15 @@ using GameLibrary.Data;
 using GameLibrary.Data.Entities;
 using GameLibrary.Services;
 using GameLibrary.ViewModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace GameLibrary.Controllers
 {
     [Route("api/[Controller]")]  //api path in browser
+    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)]
     [ApiController] //tells this is an api controller
     [Produces("application/json")] //tells that this controller returns json
 

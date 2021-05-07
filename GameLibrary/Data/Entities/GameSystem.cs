@@ -23,5 +23,7 @@ namespace GameLibrary.Data.Entities
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreationDate { get; set; }
 
+        public StoreUser user { get; set; }
+
     }
 }
