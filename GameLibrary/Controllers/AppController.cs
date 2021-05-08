@@ -26,7 +26,7 @@ namespace GameLibrary.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            //StoreUser user = await userManager.FindByEmailAsync("shawn@dutchtreat.com");
+            //StoreUser user = await userManager.FindByEmailAsync("nikunj@rathod.com");
 
             //if (user == null)
             //{
