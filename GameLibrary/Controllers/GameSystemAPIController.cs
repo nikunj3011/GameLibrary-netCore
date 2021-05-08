@@ -7,12 +7,16 @@ using GameLibrary.Data;
 using GameLibrary.Data.Entities;
 using GameLibrary.Services;
 using GameLibrary.ViewModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace GameLibrary.Controllers
 {
     [Route("api/[Controller]")]  //api path in browser
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController] //tells this is an api controller
     [Produces("application/json")] //tells that this controller returns json
 
@@ -21,13 +25,15 @@ namespace GameLibrary.Controllers
         private readonly ILogger<GameAPIController> logger;
         private readonly IGameRepository gameRepository;
         private readonly IMapper mapper;
+        private readonly UserManager<StoreUser> userManager;
 
         public GameSystemAPIController(ILogger<GameAPIController> logger, 
-            IGameRepository gameRepository, IMapper mapper)
+            IGameRepository gameRepository, IMapper mapper, UserManager<StoreUser> userManager)
         { 
             this.logger = logger;
             this.gameRepository = gameRepository;
             this.mapper = mapper;
+            this.userManager = userManager;
         }
 
         [HttpGet]  
@@ -71,7 +77,7 @@ namespace GameLibrary.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]GameSystemAPIViewModel gameSystem)
+        public async Task<IActionResult> Post([FromBody]GameSystemAPIViewModel gameSystem)
         {
             //add it to database
             try
@@ -93,6 +99,8 @@ namespace GameLibrary.Controllers
                     {
                         newGameSystem.CreationDate = DateTime.Now;
                     }
+                    var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+                    newGameSystem.user = currentUser;
                     gameRepository.AddEntity(newGameSystem);
                     if (gameRepository.SaveAll())
                     {
