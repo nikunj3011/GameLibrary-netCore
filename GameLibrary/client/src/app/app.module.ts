@@ -4,15 +4,21 @@ import { HttpClientModule } from "@angular/common/http";
 import { AppComponent } from './app.component';
 import { Game } from './services/store.services';
 import GameListView from './views/gameListView.component';
+import router from './router';
+import { GamePage } from './pages/gamePage.component';
+import { GameSystem } from './pages/gameSystem.component';
 
 @NgModule({
   declarations: [
         AppComponent,
-        GameListView
+        GameListView,
+        GamePage,
+        GameSystem
   ],
   imports: [
       BrowserModule,
-      HttpClientModule
+      HttpClientModule,
+      router
   ],
     providers: [
         Game],
