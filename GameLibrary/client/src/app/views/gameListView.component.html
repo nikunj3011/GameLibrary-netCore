@@ -1,15 +1,51 @@
-﻿<div class="row">
+﻿<h2>Get Date using Angular and API:</h2>
+<div class="row">
 
-    
-    <div class="col-9">
-        <ul>
-            <li *ngFor="let p of Games">{{p.title}}</li>
-        </ul>
-    </div>
-    <div class="col-3">
-        <ul>
-            <li *ngFor="let p of Games">{{p.system}}</li>
-        </ul>
-    </div>
+    <table class="table table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Rating
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    GameSystems
+                </th>
+                <th>
+                    DiscType
+                </th>
+                <th>
+                    CreationDate
+                </th>
+                <th></th>
+            </tr>
+        </thead>
 
+        <tr *ngFor="let p of games.games">
+            <td>
+                {{p.name}}
+            </td>
+            <td>
+                {{p.rating}}
+            </td>
+            <td>
+                {{p.description}}
+            </td>
+            <td>
+                {{p.gameSystems.systemName}}
+            </td>
+            <td>
+                {{p.discType}}
+            </td>
+            <td>
+                {{p.creationDate}}
+            </td>
+        </tr>
+    </table>
 </div>
+<h2>Get Date using Database calls:</h2>

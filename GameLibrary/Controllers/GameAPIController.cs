@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 namespace GameLibrary.Controllers
 {
     [Route("api/[Controller]")]  //api path in browser
-    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)]
     [ApiController] //tells this is an api controller
     [Produces("application/json")] //tells that this controller returns json
 
@@ -57,7 +57,7 @@ namespace GameLibrary.Controllers
             try
             {
                 var username = User.Identity.Name;
-                var results = gameRepository.GetGameLibrariesByName(username, includeItems);
+                var results = gameRepository.GetGamesByName(username, includeItems);
                 logger.LogInformation($"game api called.");
                 return Ok(results);
 

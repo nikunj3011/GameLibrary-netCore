@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\MSI\Documents\itgex\IT-GEX\sem5\aspnetcore\GameLibrary-netCore\GameLibrary\client\src\polyfills.ts */"hN/g");
+module.exports = __webpack_require__(/*! C:\Users\Nikunj Rathod\Documents\Learning\GameLibrary-netCore\GameLibrary\client\src\polyfills.ts */"hN/g");
 
 
 /***/ }),

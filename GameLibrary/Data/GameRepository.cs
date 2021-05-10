@@ -64,6 +64,21 @@ namespace GameLibrary.Data
             }
         }
 
+        public IEnumerable<Games> GetGamesByName(string username, bool includeItems)
+        {
+            //if (includeItems)
+            //{
+            //    return gameContext.GameLibraries.ToList();
+            //}
+            //else
+            //{
+            //return gameContext.GameLibraries.Where(p => p.Name == username).Include(p => p.GameSystems).ToList();
+
+            return gameContext.GameLibraries
+            .Include(l => l.GameSystems).ToList(); 
+          
+        }
+
         public IEnumerable<GameSystem> GetGameSystems(bool includeItems)
         {
             if (includeItems)

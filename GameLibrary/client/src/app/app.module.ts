@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from "@angular/common/http";
 import { AppComponent } from './app.component';
+import { Game } from './services/store.services';
 import GameListView from './views/gameListView.component';
 
 @NgModule({
@@ -10,9 +11,11 @@ import GameListView from './views/gameListView.component';
         GameListView
   ],
   imports: [
-    BrowserModule
+      BrowserModule,
+      HttpClientModule
   ],
-  providers: [],
+    providers: [
+        Game],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
