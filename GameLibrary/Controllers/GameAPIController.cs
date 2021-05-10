@@ -69,5 +69,52 @@ namespace GameLibrary.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] Games gameSystem)
+        {
+            //add it to database
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var newGame = new Games()
+                    {
+                        CreationDate = DateTime.Now,
+                        GameSystemID = 1,
+                        Description=gameSystem.Description,
+                        DiscType=gameSystem.DiscType, 
+                        Name=gameSystem.Name,
+                        Rating=gameSystem.Rating
+                    };
+
+                    //using Automapper
+
+                    gameRepository.AddEntity(newGame);
+                    if (gameRepository.SaveAll())
+                    {
+                        //var vm = new GameSystemAPIViewModel()
+                        //{
+                        //    CreationDate = newGameSystem.CreationDate,
+                        //    GameSystemAPIID = newGameSystem.GameSystemID,
+                        //    SystemNameAPI = newGameSystem.SystemName,
+                        //    GameLibrary = gameSystem.GameLibrary
+                        //};
+
+                        //using Automapper
+                        return Created($"/api/GameAPI/{newGame.GameLibraryID}", true);
+                    }
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Failed to save game system:{ex}");
+            }
+            return BadRequest("Failed to save game system");
+        }
+
     }
 }

@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 namespace GameLibrary.Controllers
 {
     [Route("api/[Controller]")]  //api path in browser
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController] //tells this is an api controller
     [Produces("application/json")] //tells that this controller returns json
 
