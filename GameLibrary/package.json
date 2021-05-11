@@ -3,11 +3,14 @@
   "name": "asp.net",
   "private": true,
   "dependencies": {
-    "jquery": "3.5.1",
     "bootstrap": "4.6.0",
+    "font-awesome": "4.7.0",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglify": "^3.0.2",
+    "jquery": "3.5.1",
     "jquery-validation": "1.19.3",
-    "jquery-validation-unobtrusive": "3.2.12",
-    "font-awesome": "4.7.0"
+    "jquery-validation-unobtrusive": "3.2.12"
   },
   "devDependencies": {}
 }

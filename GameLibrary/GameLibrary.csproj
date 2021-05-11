@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="gulpfile.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="gulpfile.js"/>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\index.html" />
   </ItemGroup>
 
@@ -33,4 +41,10 @@
     <PackageReference Include="OdeToCode.UseNodeModules" Version="3.0.0" />
   </ItemGroup>
 
+  <Target Name="MyPublishScripts" BeforeTargets="BeforePublis">
+    <Exec Command="npm install"/>
+    <Exec Command="gulp"/>
+    <Exec Command="npm install" WorkingDirectory=".\\client"/>
+    <Exec Command="npm install --prod" WorkingDirectory=".\\client"/>
+  </Target>
 </Project>
