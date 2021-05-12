@@ -47,7 +47,7 @@ namespace GameLibrary.Controllers
                 logger.LogInformation($"game system  api called.");
                 //return Ok(gameRepository.GetGameSystems()); 
                 var result = gameRepository.GetGameSystems(includeItems);
-                return Ok(mapper.Map<IEnumerable<GameSystemAPIViewModel>>(result));
+                return Ok(result);
 
             }
             catch (Exception ex)

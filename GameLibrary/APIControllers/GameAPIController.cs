@@ -52,7 +52,7 @@ namespace GameLibrary.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         //public IEnumerable<Library> Get()
-        public ActionResult<IEnumerable<GameSystem>> GetByName(bool includeItems)
+        public ActionResult<IEnumerable<Games>> GetByName(bool includeItems)
         {
             try
             {

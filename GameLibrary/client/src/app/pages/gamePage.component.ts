@@ -13,11 +13,11 @@ export class GamePage {
     }
     onCreateGame() {
         this.errorMessage = "";
-        this.game.addGame()
-            .subscribe(() => {
-                this.router.navigate(["/"]);
-            }, err => {
-                    this.errorMessage = "Failed to add Game"; 
-            })
+        //this.game.addGame()
+        //    .subscribe(() => {
+        //        this.router.navigate(["/"]);
+        //    }, err => {
+        //            this.errorMessage = "Failed to add Game"; 
+        //    })
     }
 }

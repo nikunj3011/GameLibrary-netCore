@@ -313,12 +313,12 @@ class GamePage {
     }
     onCreateGame() {
         this.errorMessage = "";
-        this.game.addGame()
-            .subscribe(() => {
-            this.router.navigate(["/"]);
-        }, err => {
-            this.errorMessage = "Failed to add Game";
-        });
+        //this.game.addGame()
+        //    .subscribe(() => {
+        //        this.router.navigate(["/"]);
+        //    }, err => {
+        //            this.errorMessage = "Failed to add Game"; 
+        //    })
     }
 }
 GamePage.ɵfac = function GamePage_Factory(t) { return new (t || GamePage)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_store_services__WEBPACK_IMPORTED_MODULE_1__["Game"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"])); };
