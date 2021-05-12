@@ -1,5 +1,6 @@
 ﻿using GameLibrary.Data.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GameLibrary.Data
 {
@@ -7,6 +8,7 @@ namespace GameLibrary.Data
     {
         IEnumerable<Games> GetGameLibraries();
         IEnumerable<Games> GetGamesByName(string username, bool includeItems);
+        Task<Games[]> GetGamesAsync();
 
         IEnumerable<GameSystem> GetGameLibrariesByName(string name, bool includeItems);
         IEnumerable<GameSystem> GetGameSystems(bool includeItems);

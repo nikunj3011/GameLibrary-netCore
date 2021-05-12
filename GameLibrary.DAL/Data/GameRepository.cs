@@ -44,6 +44,22 @@ namespace GameLibrary.Data
             }
             
         }
+        public async Task<Games[]> GetGamesAsync()
+        { 
+            var query = gameContext.GameLibraries
+              .Include(t => t.GameSystems)
+              .OrderBy(t => t.Name); 
+            try
+            {
+                logger.LogInformation("Get All games");
+                return await query.ToArrayAsync();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Failed to get games: {ex}");
+                return null;
+            }
+        } 
 
         public IEnumerable<Games> GetGameLibrariesByName(string name)
         {
@@ -103,5 +119,7 @@ namespace GameLibrary.Data
         {
             return gameContext.SaveChanges()>0;
         }
+
+        
     }
 }
