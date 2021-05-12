@@ -7,15 +7,16 @@ namespace GameLibrary.Controllers
     public class DemoController : ControllerBase
     { 
         [HttpGet] 
-        public object GetGame()
+        public IActionResult GetGame()
         { 
             try
             { 
-                return new { Game = "NFS", System = "PC" };
+                return Ok(new { Game = "NFS", System = "PC" }) ;
             }
             catch 
             { 
-                return BadRequest("Failed to get games");
+                return NotFound("Failed to get games");
+                //BadRequest this. etc
             }
         }
 
