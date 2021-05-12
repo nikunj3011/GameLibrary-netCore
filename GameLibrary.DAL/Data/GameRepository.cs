@@ -44,7 +44,7 @@ namespace GameLibrary.Data
             }
             
         }
-        public async Task<Games[]> GetGamesAsync()
+        public async Task<IEnumerable<Games>> GetGamesAsync()
         { 
             var query = gameContext.GameLibraries
               .Include(t => t.GameSystems)
