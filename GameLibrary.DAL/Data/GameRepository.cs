@@ -44,15 +44,24 @@ namespace GameLibrary.Data
             }
             
         }
-        public async Task<IEnumerable<Games>> GetGamesAsync()
-        { 
-            var query = gameContext.GameLibraries
-              .Include(t => t.GameSystems)
-              .OrderBy(t => t.Name); 
+        public async Task<IEnumerable<Games>> GetGamesAsync(bool includeGameSystem)
+        {  
             try
             {
                 logger.LogInformation("Get All games");
-                return await query.ToArrayAsync();
+                if (includeGameSystem)
+                {
+                    return await gameContext.GameLibraries
+                     .Include(t => t.GameSystems)
+                     .OrderBy(t => t.Name)
+                                    .ToArrayAsync();
+                }
+                else
+                {
+                    return await gameContext.GameLibraries 
+                     .OrderBy(t => t.Name)
+                                    .ToArrayAsync();
+                }
             }
             catch (Exception ex)
             {

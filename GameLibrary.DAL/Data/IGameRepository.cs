@@ -8,7 +8,7 @@ namespace GameLibrary.Data
     {
         IEnumerable<Games> GetGameLibraries();
         IEnumerable<Games> GetGamesByName(string username, bool includeItems);
-        Task<IEnumerable<Games>> GetGamesAsync();
+        Task<IEnumerable<Games>> GetGamesAsync(bool includeGameSystem);
         Task<Games> GetGameAsync(string game);
         Task<Games> GetGameAsync(int game);
 

@@ -22,11 +22,11 @@ namespace GameLibrary.Controllers
         }
 
         [HttpGet] 
-        public async Task<IActionResult> GetGame()
+        public async Task<IActionResult> GetGames(bool includeGameSystem=false)
         {
             try
             {
-                var results = await _gameRepository.GetGamesAsync();
+                var results = await _gameRepository.GetGamesAsync(includeGameSystem);
                 GamesViewModel[] gamesViewModel = _mapper.Map<GamesViewModel[]>(results);
                 return Ok(gamesViewModel) ;
             }
