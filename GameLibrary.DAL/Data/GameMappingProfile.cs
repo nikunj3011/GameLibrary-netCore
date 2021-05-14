@@ -10,6 +10,7 @@ namespace GameLibrary.Data
 {
     public class GameMappingProfile: Profile
     {
+        //add mapping profile for automapper and map model with viewmodels
         public GameMappingProfile()
         {
             CreateMap<GameSystem, GameSystemAPIViewModel>()
