@@ -38,6 +38,42 @@ namespace GameLibrary.Controllers
             }
         }
 
+        [HttpGet("name/{game}")]
+        public async Task<ActionResult<GamesViewModel>> Get(string game)
+        {
+            try
+            {
+                var result = await _gameRepository.GetGameAsync(game);
+                if (result == null) return NotFound();
+                GamesViewModel gamesViewModel = _mapper.Map<GamesViewModel>(result);
+                return Ok(gamesViewModel);
+            }
+            catch
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+                //return NotFound("Failed to get games");
+                //BadRequest this. etc
+            }
+        }
+
+        [HttpGet("id/{id}")]
+        public async Task<ActionResult<GamesViewModel>> Get(int id)
+        {
+            try
+            {
+                var result = await _gameRepository.GetGameAsync(id);
+                if (result == null) return NotFound();
+                GamesViewModel gamesViewModel = _mapper.Map<GamesViewModel>(result);
+                return Ok(gamesViewModel);
+            }
+            catch
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+                //return NotFound("Failed to get games");
+                //BadRequest this. etc
+            }
+        }
+
 
     }
 }

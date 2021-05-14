@@ -59,7 +59,38 @@ namespace GameLibrary.Data
                 logger.LogError($"Failed to get games: {ex}");
                 return null;
             }
-        } 
+        }
+
+        public async Task<Games> GetGameAsync(string game)
+        {
+           // return await .ToList();
+            var query = gameContext.GameLibraries.Include(p => p.GameSystems).Where(p => p.Name == game);
+            try
+            {
+                logger.LogInformation("Get All games");
+                return await query.SingleOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Failed to get games: {ex}");
+                return null;
+            }
+        }
+        public async Task<Games> GetGameAsync(int game)
+        {
+            // return await .ToList();
+            var query = gameContext.GameLibraries.Include(p => p.GameSystems).Where(p => p.GameLibraryID == game);
+            try
+            {
+                logger.LogInformation("Get All games");
+                return await query.SingleOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Failed to get games: {ex}");
+                return null;
+            }
+        }
 
         public IEnumerable<Games> GetGameLibrariesByName(string name)
         {
