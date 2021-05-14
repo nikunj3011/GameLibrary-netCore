@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 namespace GameLibrary.Controllers
 {
     [Route("api/[Controller]")]  //api path in browser
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController] //tells this is an api controller
     [Produces("application/json")] //tells that this controller returns json
 
@@ -47,7 +47,7 @@ namespace GameLibrary.Controllers
                 logger.LogInformation($"game system  api called.");
                 //return Ok(gameRepository.GetGameSystems()); 
                 var result = gameRepository.GetGameSystems(includeItems);
-                return Ok(mapper.Map<IEnumerable<GameSystemAPIViewModel>>(result));
+                return Ok(result);
 
             }
             catch (Exception ex)

@@ -10,6 +10,7 @@ namespace GameLibrary.Data
 {
     public class GameMappingProfile: Profile
     {
+        //add mapping profile for automapper and map model with viewmodels
         public GameMappingProfile()
         {
             CreateMap<GameSystem, GameSystemAPIViewModel>()
@@ -17,6 +18,7 @@ namespace GameLibrary.Data
                 .ReverseMap();
 
             CreateMap<Games, GamesViewModel>()
+                .ForMember(c=>c.GameSystemSystemName, o=>o.MapFrom(m=>m.GameSystems.SystemName))
                 .ReverseMap();
         }
     }

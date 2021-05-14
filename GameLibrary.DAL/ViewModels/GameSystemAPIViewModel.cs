@@ -20,5 +20,7 @@ namespace GameLibrary.ViewModels
 
         [Required]
         public DateTime CreationDate { get; set; }
+        public StoreUser user { get; set; }
+
     }
 }

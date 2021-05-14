@@ -16,7 +16,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Newtonsoft.Json;
+using AutoMapper;
 
 namespace GameLibrary
 {
@@ -61,7 +63,16 @@ namespace GameLibrary
 
             services.AddTransient<IMailService, NullMailService>();
 
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            //add automapper to map model and viewmodel
+            //we can use this or other one (auto search for profile class or manual profile map
+            //services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new GameMappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
             //support for real mail afterwards
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(cfg=>cfg.SerializerSettings

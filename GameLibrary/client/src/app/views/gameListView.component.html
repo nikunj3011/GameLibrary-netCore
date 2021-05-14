@@ -1,0 +1,51 @@
+﻿<h2>Get Date using Angular and API:</h2>
+<div class="row">
+
+    <table class="table table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Rating
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    GameSystems
+                </th>
+                <th>
+                    DiscType
+                </th>
+                <th>
+                    CreationDate
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tr *ngFor="let p of games.games">
+            <td>
+                {{p.name}}
+            </td>
+            <td>
+                {{p.rating}}
+            </td>
+            <td>
+                {{p.description}}
+            </td>
+            <td>
+                {{p.gameSystems.systemName}}
+            </td>
+            <td>
+                {{p.discType}}
+            </td>
+            <td>
+                {{p.creationDate}}
+            </td>
+        </tr>
+    </table>
+</div>
+<h2>Get Date using Database calls:</h2>

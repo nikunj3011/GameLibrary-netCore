@@ -4,14 +4,26 @@
     ViewData["Title"] = "Index";
 }
 
+@section Scripts{
+    <script src="~/client/main.js" asp-append-version="true"></script>
+    <script src="~/client/polyfills.js"></script>
+    <script src="~/client/runtime.js"></script>
+    <script src="~/client/vendor.js"></script>
+}
+@section head{
+    <link href="~/client/styles.css" rel="stylesheet" />
+    <base href="/Libraries/Index" />
+}
 <h1>Index</h1>
+<the-games></the-games>
+
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
-        Games: @Model.Count() 
+        Games: @Model.Count()
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -35,32 +47,33 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GameSystems.SystemName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiscType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.GameLibraryID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.GameLibraryID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.GameLibraryID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GameSystems.SystemName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiscType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreationDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.GameLibraryID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.GameLibraryID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.GameLibraryID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
