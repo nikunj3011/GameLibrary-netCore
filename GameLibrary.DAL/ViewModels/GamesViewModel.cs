@@ -1,5 +1,6 @@
 ﻿using GameLibrary.Data.Entities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace GameLibrary.ViewModels
@@ -11,6 +12,12 @@ namespace GameLibrary.ViewModels
          
         public int Rating { get; set; }
          
-        public string DiscType { get; set; } 
+        public string DiscType { get; set; }
+
+        //public virtual GameSystem GameSystems { get; set; }
+       
+        public string GameSystemSystemName { get; set; }
+
+
     }
 }
