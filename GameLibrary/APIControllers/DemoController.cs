@@ -74,6 +74,42 @@ namespace GameLibrary.Controllers
             }
         }
 
+        [HttpGet("searchRating/{rating}")]
+        public async Task<ActionResult<GamesViewModel[]>> SearchByRating(int rating, bool includeSystemName=false)
+        {
+            try
+            {
+                var result = await _gameRepository.SearchRatingGameAsync(rating, includeSystemName);
+                if (result == null) return NotFound();
+                GamesViewModel[] gamesViewModel = _mapper.Map<GamesViewModel[]>(result);
+                return Ok(gamesViewModel);
+            }
+            catch
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+                //return NotFound("Failed to get games");
+                //BadRequest this. etc
+            }
+        }
+
+        [HttpGet("searchName/{name}")]
+        public async Task<ActionResult<GamesViewModel[]>> SearchByGame(string name, bool includeSystemName = false)
+        {
+            try
+            {
+                var result = await _gameRepository.SearchNameGameAsync(name, includeSystemName);
+                if (result == null) return NotFound();
+                GamesViewModel[] gamesViewModel = _mapper.Map<GamesViewModel[]>(result);
+                return Ok(gamesViewModel);
+            }
+            catch
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+                //return NotFound("Failed to get games");
+                //BadRequest this. etc
+            }
+        }
+
 
     }
 }

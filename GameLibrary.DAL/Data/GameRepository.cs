@@ -101,6 +101,57 @@ namespace GameLibrary.Data
             }
         }
 
+        public async Task<IEnumerable<Games>> SearchRatingGameAsync(int rating, bool includeSystemName)
+        {
+            //var query = gameContext.GameLibraries.Include(p => p.GameSystems).Where(p => p.Name== game);
+            try
+            {
+                logger.LogInformation("Get All games");
+                if (includeSystemName)
+                {
+                    return await gameContext.GameLibraries.Include(p => p.GameSystems).Where(p => p.Rating == rating)
+                                    .ToArrayAsync();
+                }
+                else
+                {
+                    return await gameContext.GameLibraries 
+                                    .Where(p => p.Rating == rating)
+                                    .ToArrayAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Failed to get games: {ex}");
+                return null;
+            }
+        }
+
+        public async Task<IEnumerable<Games>> SearchNameGameAsync(string name, bool includeSystemName)
+        {
+            //var query = gameContext.GameLibraries.Include(p => p.GameSystems).Where(p => p.Name== game);
+            try
+            {
+                logger.LogInformation("Get All games");
+                if (includeSystemName)
+                {
+                    return await gameContext.GameLibraries.Include(p => p.GameSystems)
+                                    .Where(p => p.Name.Contains(name))
+                                    .ToArrayAsync();
+                }
+                else
+                {
+                    return await gameContext.GameLibraries
+                                    .Where(p => p.Name.Contains(name))
+                                    .ToArrayAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Failed to get games: {ex}");
+                return null;
+            }
+        }
+
         public IEnumerable<Games> GetGameLibrariesByName(string name)
         {
             return gameContext.GameLibraries.Include(p => p.GameSystems).Where(p => p.Name == name).ToList();

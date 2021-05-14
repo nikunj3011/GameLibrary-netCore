@@ -11,6 +11,8 @@ namespace GameLibrary.Data
         Task<IEnumerable<Games>> GetGamesAsync(bool includeGameSystem);
         Task<Games> GetGameAsync(string game);
         Task<Games> GetGameAsync(int game);
+        Task<IEnumerable<Games>> SearchRatingGameAsync(int rating, bool includeSystemName);
+        Task<IEnumerable<Games>> SearchNameGameAsync(string name, bool includeSystemName);
 
         IEnumerable<GameSystem> GetGameLibrariesByName(string name, bool includeItems);
         IEnumerable<GameSystem> GetGameSystems(bool includeItems);
