@@ -99,8 +99,8 @@ namespace GameLibrary.Controllers
                     {
                         newGameSystem.CreationDate = DateTime.Now;
                     }
-                    var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
-                    newGameSystem.user = currentUser;
+                    //var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+                    //newGameSystem.user = currentUser;
                     gameRepository.AddEntity(newGameSystem);
                     if (gameRepository.SaveAll())
                     {

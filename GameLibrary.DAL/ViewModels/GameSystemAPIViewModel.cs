@@ -19,8 +19,7 @@ namespace GameLibrary.ViewModels
         public virtual ICollection<GamesViewModel> GameLibrary { get; set; }
 
         [Required]
-        public DateTime CreationDate { get; set; }
-        public StoreUser user { get; set; }
+        public DateTime CreationDate { get; set; } 
 
     }
 }

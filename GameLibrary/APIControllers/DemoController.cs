@@ -4,21 +4,25 @@ using GameLibrary.Data.Entities;
 using GameLibrary.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using System;
 using System.Threading.Tasks;
 
 namespace GameLibrary.Controllers
 {
     [Route("api/[Controller]")]  //api path in browser 
-
+    [ApiController] //tells api controller if we dont want to use frombody in post
     public class DemoController : ControllerBase
     {
         private readonly IGameRepository _gameRepository;
         private readonly IMapper _mapper;
+        private readonly LinkGenerator linkGenerator;
 
-        public DemoController(IGameRepository gameRepository, IMapper mapper)
+        public DemoController(IGameRepository gameRepository, IMapper mapper, LinkGenerator linkGenerator)
         {
             _gameRepository = gameRepository;
             _mapper = mapper;
+            this.linkGenerator = linkGenerator;
         }
 
         [HttpGet] 
@@ -110,6 +114,52 @@ namespace GameLibrary.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<ActionResult<GamesViewModel>> Post([FromBody] GamesViewModel gamesViewModel)
+        {
+            try
+            {
+                //    var location = linkGenerator.GetPathByAction("Get", "Demo",
+                //        new { games = gamesViewModel.Name });
+                //    if (string.IsNullOrWhiteSpace(location))
+                //    {
+                //        return BadRequest("Could not return game");
+                //    }
+                //    var game = _mapper.Map<Games>(gamesViewModel);
+                //    _gameRepository.AddEntity(game);
+                //    if(_gameRepository.SaveAll())
+                //    {
+                //        return Created($"api/Demo/{game.Name}", _mapper.Map<GamesViewModel>(game));
+                //    }
+                //    return Ok(gamesViewModel);
+                //}
+
+                if (ModelState.IsValid)
+                {
+                    //using Automapper
+                    var newGame = _mapper.Map<GamesViewModel, Games>(gamesViewModel);
+
+                    if (newGame.CreationDate == DateTime.MinValue)
+                    {
+                        newGame.CreationDate = DateTime.Now;
+                    }
+                    _gameRepository.AddEntity(newGame);
+                    if (_gameRepository.SaveAll())
+                    {
+                        //using Automapper
+                        return Created($"/api/GameAPI/{newGame.Name}", _mapper.Map<Games, GamesViewModel>(newGame));
+                    }
+                }
+            }
+
+            catch
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+
+            }
+            return BadRequest();
+
+        }
 
     }
 }
