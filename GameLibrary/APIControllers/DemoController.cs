@@ -25,6 +25,11 @@ namespace GameLibrary.Controllers
             this.linkGenerator = linkGenerator;
         }
 
+        /// <summary>
+        /// Get Operations
+        /// </summary>
+        /// <param name="includeGameSystem"></param>
+        /// <returns></returns>
         [HttpGet] 
         public async Task<IActionResult> GetGames(bool includeGameSystem=false)
         {
@@ -114,28 +119,25 @@ namespace GameLibrary.Controllers
             }
         }
 
+        /// <summary>
+        /// Post Operations
+        /// </summary>
+        /// <param name="gamesViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<GamesViewModel>> Post([FromBody] GamesViewModel gamesViewModel)
         {
             try
             {
-                //    var location = linkGenerator.GetPathByAction("Get", "Demo",
-                //        new { games = gamesViewModel.Name });
-                //    if (string.IsNullOrWhiteSpace(location))
-                //    {
-                //        return BadRequest("Could not return game");
-                //    }
-                //    var game = _mapper.Map<Games>(gamesViewModel);
-                //    _gameRepository.AddEntity(game);
-                //    if(_gameRepository.SaveAll())
-                //    {
-                //        return Created($"api/Demo/{game.Name}", _mapper.Map<GamesViewModel>(game));
-                //    }
-                //    return Ok(gamesViewModel);
-                //}
-
+                
                 if (ModelState.IsValid)
                 {
+                    //var isvalidGame = _gameRepository.SearchNameGameAsync(gamesViewModel.Name,true);
+                    //if (isvalidGame != null)
+                    //{
+                    //    return BadRequest("Game is already in database");
+                    //}
+
                     //using Automapper
                     var newGame = _mapper.Map<GamesViewModel, Games>(gamesViewModel);
 
@@ -160,6 +162,43 @@ namespace GameLibrary.Controllers
             return BadRequest();
 
         }
+
+        /// <summary>
+        /// Put Operations
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="gamesViewModel"></param>
+        /// <returns></returns>
+        [HttpPut("{name}")]
+        public async Task<ActionResult<GamesViewModel>> Put(int name, GamesViewModel gamesViewModel)//string name
+        {
+            try
+            {
+
+                if (ModelState.IsValid)
+                {
+                    var oldGame =  _gameRepository.GetGameById(name);
+                    //var oldGame = _gameRepository.GetGameAsync(name);
+                    if (oldGame == null) return NotFound("Not found"); 
+
+                    _mapper.Map(gamesViewModel, oldGame); 
+
+                    if (_gameRepository.SaveAll())
+                    {
+                        //using Automapper
+                        return _mapper.Map<GamesViewModel>(oldGame);    
+                    }
+                }
+            }
+
+            catch
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+
+            }
+            return BadRequest();
+        }
+
 
     }
 }
