@@ -211,6 +211,12 @@ namespace GameLibrary.Data
             return gameContext.SaveChanges()>0;
         }
 
-        
+        public void DeleteGame<T>(T entity) where T : class
+        {
+            logger.LogInformation($"Removing an object of type {entity.GetType()} to the context.");
+            gameContext.Remove(entity);
+        }
+
+
     }
 }

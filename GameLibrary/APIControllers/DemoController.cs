@@ -200,5 +200,31 @@ namespace GameLibrary.Controllers
         }
 
 
+        [HttpDelete("{name}")]
+        public async Task<ActionResult<GamesViewModel>> Delete(int name)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var oldGame = _gameRepository.GetGameById(name); 
+                    if (oldGame == null) return NotFound("Not found");
+
+                    _gameRepository.DeleteGame(oldGame);
+                    if (_gameRepository.SaveAll())
+                    {
+                        //using Automapper
+                        return Ok();
+                    }
+                }
+            }
+
+            catch
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+
+            }
+            return BadRequest();
+        }
     }
 }
