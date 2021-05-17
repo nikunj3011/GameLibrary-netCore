@@ -16,14 +16,15 @@ namespace GameLibrary.Controllers
     [ApiController] //tells api controller if we dont want to use frombody in post 
     //[Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)] 
     [Produces("application/json")] //tells that this controller returns json
-    public class DemoController : ControllerBase
+    public class GameAPIController : ControllerBase
     {
         private readonly IGameRepository _gameRepository;
         private readonly IMapper _mapper;
         private readonly LinkGenerator linkGenerator;
-        private readonly ILogger logger;
+        private readonly ILogger<GameAPIController> logger;
 
-        public DemoController(IGameRepository gameRepository, IMapper mapper, LinkGenerator linkGenerator, ILogger logger)
+        public GameAPIController(IGameRepository gameRepository, IMapper mapper, LinkGenerator linkGenerator,
+            ILogger<GameAPIController> logger)
         {
             _gameRepository = gameRepository;
             _mapper = mapper;
@@ -36,7 +37,7 @@ namespace GameLibrary.Controllers
         /// </summary>
         /// <param name="includeGameSystem"></param>
         /// <returns></returns>
-        [HttpGet] 
+        [HttpGet("name")] 
         public async Task<IActionResult> GetGames(bool includeGameSystem=false)
         {
             try
@@ -50,6 +51,28 @@ namespace GameLibrary.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
                 //return NotFound("Failed to get games");
                 //BadRequest this. etc
+            }
+        }
+
+
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        //public IEnumerable<Library> Get()
+        public ActionResult<IEnumerable<Games>> GetByName(bool includeItems)
+        {
+            try
+            {
+                var username = User.Identity.Name;
+                var results = _gameRepository.GetGamesByName(username, includeItems);
+                logger.LogInformation($"game api called.");
+                return Ok(results);
+
+            }
+            catch (Exception ex)
+            {
+                logger.LogInformation($"Failed to get games: {ex}");
+                return BadRequest("Failed to get games");
             }
         }
 
@@ -152,7 +175,7 @@ namespace GameLibrary.Controllers
                         newGame.CreationDate = DateTime.Now;
                     }
                     _gameRepository.AddEntity(newGame);
-                    if (_gameRepository.SaveAll())
+                    if (await _gameRepository.SaveAll())
                     {
                         //using Automapper
                         return Created($"/api/GameAPI/{newGame.Name}", _mapper.Map<Games, GamesViewModel>(newGame));
@@ -167,6 +190,53 @@ namespace GameLibrary.Controllers
             }
             return BadRequest();
 
+        }
+
+        [HttpPost("name")]
+        public async Task<IActionResult> Post([FromBody] Games gameSystem)
+        {
+            //add it to database
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var newGame = new Games()
+                    {
+                        CreationDate = DateTime.Now,
+                        GameSystemID = 1,
+                        Description = gameSystem.Description,
+                        DiscType = gameSystem.DiscType,
+                        Name = gameSystem.Name,
+                        Rating = gameSystem.Rating
+                    };
+
+                    //using Automapper
+
+                    _gameRepository.AddEntity(newGame);
+                    if (await _gameRepository.SaveAll())
+                    {
+                        //var vm = new GameSystemAPIViewModel()
+                        //{
+                        //    CreationDate = newGameSystem.CreationDate,
+                        //    GameSystemAPIID = newGameSystem.GameSystemID,
+                        //    SystemNameAPI = newGameSystem.SystemName,
+                        //    GameLibrary = gameSystem.GameLibrary
+                        //};
+
+                        //using Automapper
+                        return Created($"/api/GameAPI/{newGame.GameLibraryID}", true);
+                    }
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Failed to save game system:{ex}");
+            }
+            return BadRequest("Failed to save game system");
         }
 
         /// <summary>
@@ -189,7 +259,7 @@ namespace GameLibrary.Controllers
 
                     _mapper.Map(gamesViewModel, oldGame); 
 
-                    if (_gameRepository.SaveAll())
+                    if (await _gameRepository.SaveAll())
                     {
                         //using Automapper
                         return _mapper.Map<GamesViewModel>(oldGame);    
@@ -216,8 +286,8 @@ namespace GameLibrary.Controllers
                     var oldGame = _gameRepository.GetGameById(name); 
                     if (oldGame == null) return NotFound("Not found");
 
-                    _gameRepository.DeleteGame(oldGame);
-                    if (_gameRepository.SaveAll())
+                    _gameRepository.Delete(oldGame);
+                    if (await _gameRepository.SaveAll())
                     {
                         //using Automapper
                         return Ok();
@@ -231,74 +301,6 @@ namespace GameLibrary.Controllers
 
             }
             return BadRequest();
-        }
-
-        [HttpGet]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        //public IEnumerable<Library> Get()
-        public ActionResult<IEnumerable<Games>> GetByName(bool includeItems)
-        {
-            try
-            {
-                var username = User.Identity.Name;
-                var results = _gameRepository.GetGamesByName(username, includeItems);
-                logger.LogInformation($"game api called.");
-                return Ok(results);
-
-            }
-            catch (Exception ex)
-            {
-                logger.LogInformation($"Failed to get games: {ex}");
-                return BadRequest("Failed to get games");
-            }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Games gameSystem)
-        {
-            //add it to database
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var newGame = new Games()
-                    {
-                        CreationDate = DateTime.Now,
-                        GameSystemID = 1,
-                        Description = gameSystem.Description,
-                        DiscType = gameSystem.DiscType,
-                        Name = gameSystem.Name,
-                        Rating = gameSystem.Rating
-                    };
-
-                    //using Automapper
-
-                    _gameRepository.AddEntity(newGame);
-                    if (_gameRepository.SaveAll())
-                    {
-                        //var vm = new GameSystemAPIViewModel()
-                        //{
-                        //    CreationDate = newGameSystem.CreationDate,
-                        //    GameSystemAPIID = newGameSystem.GameSystemID,
-                        //    SystemNameAPI = newGameSystem.SystemName,
-                        //    GameLibrary = gameSystem.GameLibrary
-                        //};
-
-                        //using Automapper
-                        return Created($"/api/GameAPI/{newGame.GameLibraryID}", true);
-                    }
-                }
-                else
-                {
-                    return BadRequest(ModelState);
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.LogError($"Failed to save game system:{ex}");
-            }
-            return BadRequest("Failed to save game system");
-        }
+        } 
     }
 }
