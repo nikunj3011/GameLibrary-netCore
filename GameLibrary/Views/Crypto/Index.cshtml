@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Crypto.API.CryptoViewModel>
+<script src="https://cdn.jsdelivr.net/npm/patternomaly@1.3.2/dist/patternomaly.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+
+<h1>Welcome To the Dashboard</h1>
+
+<div class="row">
+
+    <div class="col-md-6">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        id
+                    </th>
+
+                    <th>
+                        name
+                    </th>
+
+                    <th>
+                        current_price
+                    </th>
+
+                    <th>
+                        high_24h
+                    </th>
+
+                    <th>
+                        low_24h
+                    </th>
+                    <th>
+                        price_change_24h
+                    </th>
+                    <th>
+                        price_change_percentage_24h
+                    </th>
+                    <th>
+                        market_cap_change_24h
+                    </th>
+                    <th>
+                        market_cap_change_percentage_24h
+                    </th>
+                    <th>
+                        ath_change_percentage
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.current_price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.high_24h)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.low_24h)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.price_change_24h)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.market_cap_change_24h)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.market_cap_change_percentage_24h)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ath_change_percentage)
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <div class="chartContainer" style="position: relative; height:100%; width:100%">
+            <canvas id="chartTime">
+            </canvas>
+        </div>
+    </div>
+</div>
+
+
+
+
+
