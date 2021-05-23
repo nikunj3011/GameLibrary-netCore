@@ -12,14 +12,19 @@ namespace GameLibrary.Data
         Task<Games> GetGameAsync(string game);
         Task<Games> GetGameAsync(int game);
         Task<IEnumerable<Games>> SearchRatingGameAsync(int rating, bool includeSystemName);
+        Games GetGameById(int gameid);
         Task<IEnumerable<Games>> SearchNameGameAsync(string name, bool includeSystemName);
 
+        //Game System
         IEnumerable<GameSystem> GetGameLibrariesByName(string name, bool includeItems);
         IEnumerable<GameSystem> GetGameSystems(bool includeItems);
         GameSystem GetGameSystemsById(int id);
+        Task<GameSystem[]> GetGameSystemByGameId(int gameid, int gameSystemId, bool includeSpeakers = false);
+        Task<GameSystem[]> GetGameSystemsByGameName(string name);
 
-        public bool SaveAll();
-        void AddEntity(object model); //add any type of data
-        Games GetGameById(int gameid);
+        // General 
+        void Delete<T>(T entity) where T : class;
+        void AddEntity<T>(T entity) where T : class; 
+        Task<bool> SaveAll();
     }
 }

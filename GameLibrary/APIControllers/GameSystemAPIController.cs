@@ -22,12 +22,12 @@ namespace GameLibrary.Controllers
 
     public class GameSystemAPIController : Controller
     { 
-        private readonly ILogger<GameAPIController> logger;
+        private readonly ILogger<GameSystemAPIController> logger;
         private readonly IGameRepository gameRepository;
         private readonly IMapper mapper;
         private readonly UserManager<StoreUser> userManager;
 
-        public GameSystemAPIController(ILogger<GameAPIController> logger, 
+        public GameSystemAPIController(ILogger<GameSystemAPIController> logger, 
             IGameRepository gameRepository, IMapper mapper, UserManager<StoreUser> userManager)
         { 
             this.logger = logger;
@@ -40,7 +40,7 @@ namespace GameLibrary.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         //public IEnumerable<Library> Get()
-        public ActionResult<IEnumerable<GameSystem>> Get(bool includeItems=true) 
+        public ActionResult<IEnumerable<GameSystem>> Get(bool includeItems=false) 
         {
             try
             {
@@ -65,7 +65,7 @@ namespace GameLibrary.Controllers
                 logger.LogInformation($"game system  api called.");
                 var gameSystem = gameRepository.GetGameSystemsById(id);
 
-                if (gameSystem != null) return Ok(mapper.Map<GameSystem,GameSystemAPIViewModel>(gameSystem));
+                if (gameSystem != null) return Ok(mapper.Map<GameSystem, GameSystemAPIViewModel>(gameSystem));
                 else return NotFound(); 
 
             }
@@ -77,7 +77,7 @@ namespace GameLibrary.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]GameSystemAPIViewModel gameSystem)
+        public async Task<IActionResult> Post([FromBody] GameSystemAPIViewModel gameSystem)
         {
             //add it to database
             try
@@ -99,10 +99,10 @@ namespace GameLibrary.Controllers
                     {
                         newGameSystem.CreationDate = DateTime.Now;
                     }
-                    var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
-                    newGameSystem.user = currentUser;
+                    //var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+                    //newGameSystem.user = currentUser;
                     gameRepository.AddEntity(newGameSystem);
-                    if (gameRepository.SaveAll())
+                    if (await gameRepository.SaveAll())
                     {
                         //var vm = new GameSystemAPIViewModel()
                         //{
@@ -113,7 +113,7 @@ namespace GameLibrary.Controllers
                         //};
 
                         //using Automapper
-                        return Created($"/api/GameSystem/{newGameSystem.GameSystemID}", mapper.Map<GameSystem,GameSystemAPIViewModel>(newGameSystem));
+                        return Created($"/api/GameSystem/{newGameSystem.GameSystemID}", mapper.Map<GameSystem, GameSystemAPIViewModel>(newGameSystem));
                     }
                 }
                 else

@@ -70,7 +70,7 @@ namespace GameLibrary.Controllers
             if (ModelState.IsValid)
             {
                 //send email
-                _mailService.SendMessage("a@a.com", model.Name, $"from: { model.Email} , Message: {model.message}");
+                //_mailService.SendMessage("a@a.com", model.Name, $"from: { model.Email} , Message: {model.message}");
                 ViewBag.UserMessage = "Sent mail";
                 ModelState.Clear();
             }

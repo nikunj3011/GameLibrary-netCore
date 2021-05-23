@@ -126,6 +126,21 @@ namespace GameLibrary.Data
             }
         }
 
+        public IEnumerable<Games> GetGamesByName(string username, bool includeItems)
+        {
+            //if (includeItems)
+            //{
+            //    return gameContext.GameLibraries.ToList();
+            //}
+            //else
+            //{
+            //return gameContext.GameLibraries.Where(p => p.Name == username).Include(p => p.GameSystems).ToList();
+
+            return gameContext.GameLibraries
+            .Include(l => l.GameSystems).ToList();
+
+        }
+
         public async Task<IEnumerable<Games>> SearchNameGameAsync(string name, bool includeSystemName)
         {
             //var query = gameContext.GameLibraries.Include(p => p.GameSystems).Where(p => p.Name== game);
@@ -171,21 +186,6 @@ namespace GameLibrary.Data
             }
         }
 
-        public IEnumerable<Games> GetGamesByName(string username, bool includeItems)
-        {
-            //if (includeItems)
-            //{
-            //    return gameContext.GameLibraries.ToList();
-            //}
-            //else
-            //{
-            //return gameContext.GameLibraries.Where(p => p.Name == username).Include(p => p.GameSystems).ToList();
-
-            return gameContext.GameLibraries
-            .Include(l => l.GameSystems).ToList(); 
-          
-        }
-
         public IEnumerable<GameSystem> GetGameSystems(bool includeItems)
         {
             if (includeItems)
@@ -200,17 +200,64 @@ namespace GameLibrary.Data
             
         }
 
+        public async Task<GameSystem[]> GetGameSystemByGameId(int gameid, int gameSystemId, bool includeSpeakers = false)
+        {
+            logger.LogInformation($"Getting all Talks for a Camp");
+
+            IQueryable<GameSystem> query = gameContext.GameSystems;
+
+            if (includeSpeakers)
+            {
+                query = query
+                  .Include(t => t.GameLibrary);
+            }
+
+            // Add Query
+            query = query
+              .Where(t => t.GameSystemID == gameid)
+              .OrderBy(t => t.SystemName);
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<GameSystem[]> GetGameSystemsByGameName(string name)
+        {
+            logger.LogInformation($"Getting all Talks for a Camp");
+
+            IQueryable<GameSystem> query = gameContext.GameSystems;
+
+            // Add Query
+            query = query.Include(t => t.GameLibrary.Where(a => a.Name.Contains(name)))
+                .OrderBy(p=>p.SystemName);
+
+            return query.ToArray();
+        }
+
         public GameSystem GetGameSystemsById(int id)
         {
             return gameContext.GameSystems.Include(p => p.GameLibrary)/*.ThenInclude(p=>p.GameSystemID)*/
                 .Where(p => p.GameSystemID == id).FirstOrDefault();
-        }
+        } 
+         
 
-        public bool SaveAll()
+        public void AddEntity<T>(T entity) where T : class
         {
-            return gameContext.SaveChanges()>0;
+            logger.LogInformation($"Adding an object of type {entity.GetType()} to the context.");
+            gameContext.Add(entity);
         }
 
-        
+        public void Delete<T>(T entity) where T : class
+        {
+            logger.LogInformation($"Removing an object of type {entity.GetType()} to the context.");
+            gameContext.Remove(entity);
+        }
+
+        public async Task<bool> SaveAll()
+        {
+            logger.LogInformation($"Attempitng to save the changes in the context");
+
+            // Only return success if at least one row was changed
+            return (await gameContext.SaveChangesAsync()) > 0;
+        } 
     }
 }
