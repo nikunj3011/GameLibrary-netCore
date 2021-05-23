@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameLibrary.Services
 {
-    public class NullMailService : IMailService
+    public class NullMailService  /*: IMailService*/
     {
         private readonly ILogger<NullMailService> _logger;
 

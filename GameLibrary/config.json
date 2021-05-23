@@ -12,6 +12,13 @@
     "Key": ";aaa;aaa;aaa;aaa;aaa;",
     "Issuer": "https://localhost:44376/",
     "Audience": "https://localhost:44376/"
+  },
+  "MailSettings": {
+    "Mail": "nikunjrathod3011@gmail.com",
+    "DisplayName": "Nikunj Rathod",
+    "Password": "notrealpassword",
+    "Host": "smtp.gmail.com",
+    "Port": 587
   }
 
 }

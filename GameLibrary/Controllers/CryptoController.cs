@@ -32,7 +32,7 @@ namespace Ditech.Portal.NET.Controllers
             if (checkEthereum.Count == 1)
             {
                 ilogger.LogInformation("abcd");
-                mailService.SendEmailAsync(mailRequest.Body=);
+                mailService.SendEmailAsync(mailRequest);
             }
             HttpContext.Response.Headers.Add("refresh", "120; url=" + Url.Action("Index"));
             return View(operations.ToList());

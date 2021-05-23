@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace GameLibrary.Services
 {
     public interface IMailService
-    {
-        ILogger<NullMailService> Logger { get; }
-
-        void SendMessage(string to, string subject, string body);
+    { 
+        Task SendEmailAsync(MailRequest mailRequest);
     }
 }
