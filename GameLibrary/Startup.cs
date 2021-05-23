@@ -19,21 +19,32 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Newtonsoft.Json;
 using AutoMapper;
+using Crypto.API;
 
 namespace GameLibrary
 {
     public class Startup
     {
-        private readonly IConfiguration _config;
-
-        public Startup(IConfiguration config)
+        public Startup(IConfiguration configuration)
         {
-            _config = config;
+            _config = configuration;
         }
+        public IConfiguration _config { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                    .WithOrigins("https://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+            services.Configure<MailSettings>(_config.GetSection("MailSettings")); 
+            services.AddSignalR();
+            services.AddTransient<IMailService, Services.MailService>();
             services.AddIdentity<StoreUser, IdentityRole>(cfg=>
             {
                 cfg.User.RequireUniqueEmail = true;
@@ -61,7 +72,7 @@ namespace GameLibrary
 
             services.AddScoped<IGameRepository, GameRepository>(); 
 
-            services.AddTransient<IMailService, NullMailService>();
+            //services.AddTransient<IMailService, Services.MailRequest>();
 
             //add automapper to map model and viewmodel
             //we can use this or other one (auto search for profile class or manual profile map
@@ -94,6 +105,7 @@ namespace GameLibrary
             app.UseStaticFiles();
             app.UseNodeModules();
             app.UseRouting();
+            app.UseCors("CorsPolicy");
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(cfg=>
@@ -104,6 +116,7 @@ namespace GameLibrary
                 //cfg.MapControllerRoute("API",
                 //    "api/{controller}",
                 //    new { controller = "GameAPI", action = "Get" });
+                cfg.MapHub<CryptoHub>("/CryptoAPI");
             });
         }
     }
