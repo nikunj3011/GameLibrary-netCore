@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-
+ 
 namespace GameLibrary.Services
 {
     public interface IDataStructure<T>

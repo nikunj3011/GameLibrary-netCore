@@ -44,7 +44,7 @@ namespace GameLibrary.Services
                 arr[i] = default;
             len = 0;
         }
-
+         
         public void add(T elem)
         {
             //resize
