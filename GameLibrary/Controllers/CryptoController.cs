@@ -27,7 +27,7 @@ namespace Ditech.Portal.NET.Controllers
 
         public IActionResult Index()
         {
-            MailRequest mailRequest = new MailRequest { Attachments = null, Body = "Crypto Price", Subject = "buy it", ToEmail = "nikunjrathod3011@gmail.com" };
+            MailRequest mailRequest = new MailRequest { Attachments = null, Body = "Crypto Price", Subject = "buy it", ToEmail = "npratho3011@gmail.com" };
             var webClient = new WebClient();
             var json = webClient.DownloadString("https://api.coingecko.com/api/v3/coins/markets?vs_currency=cad&order=market_cap_desc&per_page=10&page=1&sparkline=false");
             //JObject o1 = JObject.Parse(@json);
@@ -69,7 +69,7 @@ namespace Ditech.Portal.NET.Controllers
                 mailRequest.Subject = "Sell";
                 mailService.SendEmailAsync(mailRequest);
             }
-            HttpContext.Response.Headers.Add("refresh", "120; url=" + Url.Action("Index"));
+            HttpContext.Response.Headers.Add("refresh", "300; url=" + Url.Action("Index"));
             return View(operations.ToList());
         }
     }
