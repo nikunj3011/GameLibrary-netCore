@@ -130,20 +130,3 @@ namespace GameLibrary.Services
 
     }
 }
-
-//program
-//var abc = new DynamicArray<int>(4);
-//abc.add(1);
-//abc.add(2);
-//abc.add(3);
-//abc.set(1, 5);
-//abc.removeAt(1);
-//abc.remove(1);
-//Console.WriteLine("\n");
-//Console.WriteLine(abc.get(0));
-//Console.WriteLine(abc.indexOf(3));
-//Console.WriteLine(abc.contains(3));
-//Console.WriteLine(abc.size());
-//Console.WriteLine(abc.isEmpty());
-//abc.clear();
-//Console.WriteLine(abc.isEmpty());
