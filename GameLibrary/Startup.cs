@@ -20,6 +20,8 @@ using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Newtonsoft.Json;
 using AutoMapper;
 using Crypto.API;
+using GameLibrary.SignalR;
+using Microsoft.AspNetCore.Authentication.JwtBearer; 
 
 namespace GameLibrary
 {
@@ -43,7 +45,7 @@ namespace GameLibrary
                     .AllowCredentials());
             });
             services.Configure<MailSettings>(_config.GetSection("MailSettings")); 
-            services.AddSignalR();
+            services.AddSignalR(); //configures app to use signalr
             services.AddTransient<IMailService, Services.MailService>();
             services.AddIdentity<StoreUser, IdentityRole>(cfg=>
             {
@@ -52,15 +54,21 @@ namespace GameLibrary
             })
                 .AddEntityFrameworkStores<GameContext>();
 
-            services.AddAuthentication().AddCookie()
-                .AddJwtBearer(cfg=>
+            //services.AddAuthentication().AddCookie()
+            //    .AddJwtBearer(cfg=>
+            //    {
+            //        cfg.TokenValidationParameters = new TokenValidationParameters()
+            //        {
+            //            ValidIssuer = _config["Token:Issuer"],
+            //            ValidAudience = _config["Token:Audience"],
+            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Token:Key"]))
+            //        };
+            //    });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
                 {
-                    cfg.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidIssuer = _config["Token:Issuer"],
-                        ValidAudience = _config["Token:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Token:Key"]))
-                    };
+                    opt.Audience = _config["AAD:ResourceId"];
+                    opt.Authority = $"{_config["AAD:Instance"]}{_config["AAD:TenantId"]}";
                 });
 
             services.AddDbContext<GameContext>(cfg=>
@@ -101,13 +109,13 @@ namespace GameLibrary
             else { 
                 app.UseExceptionHandler("/error");
             }
-
+             
             app.UseStaticFiles();
             app.UseNodeModules();
             app.UseRouting();
             app.UseCors("CorsPolicy");
             app.UseAuthentication();
-            app.UseAuthorization();
+            app.UseAuthorization(); 
             app.UseEndpoints(cfg=>
             {
                 cfg.MapControllerRoute("Fallback",
@@ -117,7 +125,12 @@ namespace GameLibrary
                 //    "api/{controller}",
                 //    new { controller = "GameAPI", action = "Get" });
                 cfg.MapHub<CryptoHub>("/CryptoAPI");
+
+                cfg.MapHub<GameHub>("/gamehub");
+
+
             });
+            
         }
     }
 }
