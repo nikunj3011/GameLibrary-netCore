@@ -2,7 +2,6 @@
 using GameLibrary.Data;
 using GameLibrary.Data.Entities;
 using GameLibrary.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -113,7 +112,6 @@ namespace GameLibrary.Controllers
             }
         }
 
-        [Authorize]
         [HttpGet("searchRating/{rating}")]
         public async Task<ActionResult<GamesViewModel[]>> SearchByRating(int rating, bool includeSystemName=false)
         {
