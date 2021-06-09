@@ -8,13 +8,13 @@ namespace GameLibrary.Services
         private T[] arr;
         private int len = 0; //Length user thinks array is
         private int capacity = 0; //actual array size 
-        public DynamicArray() { arr = new T[16]; }
+        public DynamicArray() { arr =new object[16] as T[]; }
 
         public DynamicArray(int capacity)
         {
             if (capacity < 0) throw new System.ArgumentException("Capacity: "+ capacity);
             this.capacity = capacity;
-            arr = new T[capacity];
+            arr = new object[capacity] as T[];
         }
 
         public int size()
@@ -60,9 +60,46 @@ namespace GameLibrary.Services
             arr[len++] = elem;
         }
          
-        public void removeAt(int rm_index)
+        public T removeAt(int rm_index)
         {
-            throw new System.NotImplementedException();
+            if(rm_index>=len && rm_index<0) throw new System.IndexOutOfRangeException();
+            T data = arr[rm_index];
+            T[] new_arr = new T[len-1];
+
+            for(int i=0, j=0;i<len;i++, j++)
+            {
+                if (i == rm_index) j--;
+                else new_arr[j] = arr[i];
+            }
+            arr = new_arr;
+            capacity = --len;
+            return data;
+        }
+
+        public bool remove(object obj)
+        {
+            for (int i = 0; i < len; i++)
+            {
+                if (arr[i].Equals(obj))
+                    removeAt(i);
+                return true;
+            }
+            return false;
+        }
+
+        public int indexOf(object obj)
+        {
+            for (int i = 0; i < len; i++)
+            {
+                if (arr[i].Equals(obj))
+                    return i;
+            }
+            return -1;
+        }
+
+        public bool contains(object obj)
+        {
+            return indexOf(obj) != -1;
         }
 
         public int binarySearch(int key)
@@ -78,9 +115,7 @@ namespace GameLibrary.Services
         public void reverse()
         {
             throw new System.NotImplementedException();
-        }
-
-        
+        } 
 
         public void sort()
         {
@@ -91,5 +126,7 @@ namespace GameLibrary.Services
         {
             return GetEnumerator();
         }
+
+        
     }
 }
