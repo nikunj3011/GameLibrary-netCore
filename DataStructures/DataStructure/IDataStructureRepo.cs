@@ -1,7 +1,7 @@
 ﻿namespace GameLibrary.Services
 {
     public interface IDataStructureRepo<T>
-    { 
+    {
         int size();
         bool isEmpty();
         T get(int index);
@@ -9,9 +9,9 @@
         void add(T elem);
         void clear();
         T removeAt(int rm_index);
-        bool remove(object obj);
-        public int indexOf(object obj);
-        public bool contains(object obj);
+        bool remove(T obj);
+        public int indexOf(T obj);
+        public bool contains(T obj);
         void reverse();
         void sort();
         int binarySearch(int key);

@@ -8,13 +8,13 @@ namespace GameLibrary.Services
         private T[] arr;
         private int len = 0; //Length user thinks array is
         private int capacity = 0; //actual array size 
-        public DynamicArray() { arr =new object[16] as T[]; }
+        public DynamicArray() { arr = new T[16]; }
 
         public DynamicArray(int capacity)
         {
-            if (capacity < 0) throw new System.ArgumentException("Capacity: "+ capacity);
+            if (capacity < 0) throw new System.ArgumentException("Capacity: " + capacity);
             this.capacity = capacity;
-            arr = new object[capacity] as T[];
+            arr = new T[capacity];
         }
 
         public int size()
@@ -59,14 +59,14 @@ namespace GameLibrary.Services
             }
             arr[len++] = elem;
         }
-         
+
         public T removeAt(int rm_index)
         {
-            if(rm_index>=len && rm_index<0) throw new System.IndexOutOfRangeException();
+            if (rm_index >= len && rm_index < 0) throw new System.IndexOutOfRangeException();
             T data = arr[rm_index];
-            T[] new_arr = new T[len-1];
+            T[] new_arr = new T[len - 1];
 
-            for(int i=0, j=0;i<len;i++, j++)
+            for (int i = 0, j = 0; i < len; i++, j++)
             {
                 if (i == rm_index) j--;
                 else new_arr[j] = arr[i];
@@ -76,28 +76,28 @@ namespace GameLibrary.Services
             return data;
         }
 
-        public bool remove(object obj)
+        public bool remove(T obj)
         {
+            var v2 = arr[0];
             for (int i = 0; i < len; i++)
             {
-                if (arr[i].Equals(obj))
+                if (arr[i].ToString() == obj.ToString())
                     removeAt(i);
-                return true;
             }
             return false;
         }
 
-        public int indexOf(object obj)
+        public int indexOf(T obj)
         {
             for (int i = 0; i < len; i++)
             {
-                if (arr[i].Equals(obj))
+                if (arr[i].ToString() == obj.ToString())
                     return i;
             }
             return -1;
         }
 
-        public bool contains(object obj)
+        public bool contains(T obj)
         {
             return indexOf(obj) != -1;
         }
@@ -115,7 +115,7 @@ namespace GameLibrary.Services
         public void reverse()
         {
             throw new System.NotImplementedException();
-        } 
+        }
 
         public void sort()
         {
@@ -127,6 +127,23 @@ namespace GameLibrary.Services
             return GetEnumerator();
         }
 
-        
+
     }
 }
+
+//program
+//var abc = new DynamicArray<int>(4);
+//abc.add(1);
+//abc.add(2);
+//abc.add(3);
+//abc.set(1, 5);
+//abc.removeAt(1);
+//abc.remove(1);
+//Console.WriteLine("\n");
+//Console.WriteLine(abc.get(0));
+//Console.WriteLine(abc.indexOf(3));
+//Console.WriteLine(abc.contains(3));
+//Console.WriteLine(abc.size());
+//Console.WriteLine(abc.isEmpty());
+//abc.clear();
+//Console.WriteLine(abc.isEmpty());
