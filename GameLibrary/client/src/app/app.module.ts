@@ -10,7 +10,7 @@ import { GameSystem } from './pages/gameSystem.component';
 import { LoginPage } from './pages/loginPage.component';
 import { AuthActivator } from './services/authActivator.services';
 import { FormsModule } from '@angular/forms';
-import { ChartsModule } from 'ng2-charts';
+//import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { ChartsModule } from 'ng2-charts';
   ],
   imports: [
       BrowserModule,
-      ChartsModule,
+      //ChartsModule,
       HttpClientModule,
       router,
       FormsModule
