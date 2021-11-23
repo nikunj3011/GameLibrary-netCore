@@ -1,6 +1,6 @@
 ﻿{
   "ConnectionStrings": {
-    "GameConnectionString": "server=localhost\\SQLEXPRESS;Database=GameStoreDb;Integrated Security=true;MultipleActiveResultSets=true;"
+    "GameConnectionString": "server=NIKUNJ;Database=GameStoreDb;Integrated Security=true;MultipleActiveResultSets=true;"
   },
   "Logging": {
     "LogLevel": {

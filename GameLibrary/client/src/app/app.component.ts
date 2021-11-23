@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component,OnInit } from '@angular/core'; 
-import { SignalRService } from './services/signal-r.service';
+//import { SignalRService } from './services/signal-r.service';
 
 @Component({
     selector: 'the-games',
@@ -9,10 +9,10 @@ import { SignalRService } from './services/signal-r.service';
 })
 export class AppComponent implements OnInit{
     title = 'Games Library';
-    constructor(public signalRService: SignalRService, private http: HttpClient) { }
+    constructor(/*public signalRService: SignalRService,*/ private http: HttpClient) { }
     ngOnInit() {
-        this.signalRService.startConnection();
-        this.signalRService.addTransferChartDataListner();
+        //this.signalRService.startConnection();
+        //this.signalRService.addTransferChartDataListner();
         this.startHttpRequest();
     }
     private startHttpRequest = () => {
