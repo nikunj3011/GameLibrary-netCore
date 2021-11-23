@@ -19,6 +19,10 @@
     "Password": "notrealpassword",
     "Host": "smtp.gmail.com",
     "Port": 587
-  }
-
+  },
+  "AAD": {
+    "ResourceId": "api://908d94e5-becc-4884-be3d-af215c308649",
+    "Instance": "https://login.microsoftonline.com/",
+    "TenantId": "8a7ccaf2-2020-4811-8efc-342fb80e4c1e"
+  } 
 }

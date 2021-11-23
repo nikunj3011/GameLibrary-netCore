@@ -8,7 +8,10 @@
         void set(int index, T elem);
         void add(T elem);
         void clear();
-        void removeAt(int rm_index);
+        T removeAt(int rm_index);
+        bool remove(T obj);
+        public int indexOf(T obj);
+        public bool contains(T obj);
         void reverse();
         void sort();
         int binarySearch(int key);

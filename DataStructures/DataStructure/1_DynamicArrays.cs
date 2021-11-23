@@ -12,7 +12,7 @@ namespace GameLibrary.Services
 
         public DynamicArray(int capacity)
         {
-            if (capacity < 0) throw new System.ArgumentException("Capacity: "+ capacity);
+            if (capacity < 0) throw new System.ArgumentException("Capacity: " + capacity);
             this.capacity = capacity;
             arr = new T[capacity];
         }
@@ -60,9 +60,46 @@ namespace GameLibrary.Services
             arr[len++] = elem;
         }
 
-        public void removeAt(int rm_index)
+        public T removeAt(int rm_index)
         {
-            throw new System.NotImplementedException();
+            if (rm_index >= len && rm_index < 0) throw new System.IndexOutOfRangeException();
+            T data = arr[rm_index];
+            T[] new_arr = new T[len - 1];
+
+            for (int i = 0, j = 0; i < len; i++, j++)
+            {
+                if (i == rm_index) j--;
+                else new_arr[j] = arr[i];
+            }
+            arr = new_arr;
+            capacity = --len;
+            return data;
+        }
+
+        public bool remove(T obj)
+        {
+            var v2 = arr[0];
+            for (int i = 0; i < len; i++)
+            {
+                if (arr[i].ToString() == obj.ToString())
+                    removeAt(i);
+            }
+            return false;
+        }
+
+        public int indexOf(T obj)
+        {
+            for (int i = 0; i < len; i++)
+            {
+                if (arr[i].ToString() == obj.ToString())
+                    return i;
+            }
+            return -1;
+        }
+
+        public bool contains(T obj)
+        {
+            return indexOf(obj) != -1;
         }
 
         public int binarySearch(int key)
@@ -80,8 +117,6 @@ namespace GameLibrary.Services
             throw new System.NotImplementedException();
         }
 
-        
-
         public void sort()
         {
             throw new System.NotImplementedException();
@@ -91,5 +126,24 @@ namespace GameLibrary.Services
         {
             return GetEnumerator();
         }
+
+
     }
 }
+
+//program
+//var dArray = new DynamicArray<int>(4);
+//dArray.add(1);
+//dArray.add(2);
+//dArray.add(3);
+//dArray.set(1, 5);
+//dArray.removeAt(1);
+//dArray.remove(1);
+//Console.WriteLine("\n");
+//Console.WriteLine(dArray.get(0));
+//Console.WriteLine(dArray.indexOf(3));
+//Console.WriteLine(dArray.contains(3));
+//Console.WriteLine(dArray.size());
+//Console.WriteLine(dArray.isEmpty());
+//dArray.clear();
+//Console.WriteLine(dArray.isEmpty());
