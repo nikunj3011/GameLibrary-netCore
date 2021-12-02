@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using System.Net;
 
 namespace GameLibrary
 {
@@ -32,6 +33,7 @@ namespace GameLibrary
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseKestrel(options => { options.Listen(IPAddress.Any, 80); });
                 });
 
         private static void SetupConfiguration(HostBuilderContext ctx, IConfigurationBuilder builder)

@@ -77,6 +77,24 @@ namespace GameLibrary.Controllers
             }
         }
 
+        [HttpGet("aa")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        //public IEnumerable<Library> Get()
+        public IActionResult GetBAAe()
+        {
+            try
+            {
+                return Ok("aa");
+
+            }
+            catch (Exception ex)
+            {
+                logger.LogInformation($"Failed to get games: {ex}");
+                return BadRequest("Failed to get games");
+            }
+        }
+
         [HttpGet("name/{game}")]
         public async Task<ActionResult<GamesViewModel>> Get(string game)
         {
