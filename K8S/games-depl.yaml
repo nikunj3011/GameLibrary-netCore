@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gameservice-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gameservice
+  template:
+    metadata:
+      labels:
+        app: gameservice
+    spec:
+      containers:
+        - name: gameservice
+          image: nikunj3011/games
+          imagePullPolicy: Never
