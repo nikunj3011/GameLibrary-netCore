@@ -21,7 +21,8 @@ using Newtonsoft.Json;
 using AutoMapper;
 using Crypto.API;
 using GameLibrary.SignalR;
-using Microsoft.AspNetCore.Authentication.JwtBearer; 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Net.Http.Headers;
 
 namespace GameLibrary
 {
@@ -88,6 +89,13 @@ namespace GameLibrary
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new GameMappingProfile());
+            });
+
+            services.AddHttpClient("gameService", c =>
+            {
+                c.BaseAddress = new Uri( _config["GameSystemAPIService"]);
+                c.DefaultRequestHeaders.Add("Accept", "application/json");
+                c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJRWHBvWmtFVUdvMXdheDU3IiwianRpIjoiY2NkOWZkNThlNzEzYzgwMzkyMjllZGJjMzg4OTJlMjY2NWEyMDJhODQ1Njg5OWEwMjZkOWE1ZWNlYTkyMDhmNjhhNWU5OGEyYzBhMjViNjgiLCJpYXQiOjE2MzA1ODc0MjIsIm5iZiI6MTYzMDU4NzQyMiwiZXhwIjoxNjYyMTIzNDIyLCJzdWIiOiJhZG1pbiIsInNjb3BlcyI6WyJGdWxsX0FjY2VzcyIsIk9yZ2FuaXphdGlvbiIsIkVtcGxveWVlcyIsIlRpbWVzaGVldCIsIlBheXJvbGwiLCJQYXlyb2xsX0xvYW5zIl19.MYeqEsJmm1XTYZp3obxoURNhXVXZXYs3sISHay_Jq9MJdIlGiljsrRKap2-kPmUMIeiv-xT89j_r0pv2yiXzazGg1EPZG5RBiy6iheAsJnnW55o2SK0xwtCA33yTRtAAdzaEUgxIebBsU8XXwCYoH0SrNLDqjXRmuWUR6B_-IJwHfOAkrg9moYmsWVQae3CvBXk2NKCRxA6vJ5qdB0UH_PDmkaporJcwlmtOM5bT3Yq3meIhdGjB5iXOQo3uqhuQo4lBpf4QIHStu0lQzGliPZI_3KETzPgW1SXhq8lkY65XgbngDUGR029nfAx_oOzelEK2FHLwuM6ISMtLPLNesA");
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
