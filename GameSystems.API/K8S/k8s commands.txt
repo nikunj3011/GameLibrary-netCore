@@ -1,4 +1,4 @@
-﻿kubectl apply -f xxx.yml (filename)
+﻿kubectl apply - f xxx.yml (filename)
 kubectl get pods
 kubectl get deployments
 kubectl delete deploy  xxx.yml

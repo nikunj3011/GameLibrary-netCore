@@ -17,18 +17,30 @@ namespace GameLibrary.Controllers
     [ApiController] 
     public class GameswithSystemAPIController: Controller
     {
-        private readonly ILogger<GameAPIController> logger;
         private readonly IGameRepository gameRepository;
         private readonly IMapper mapper;
         private readonly LinkGenerator linkGenerator;
 
-        public GameswithSystemAPIController(ILogger<GameAPIController> logger,
+        public GameswithSystemAPIController(
             IGameRepository gameRepository, IMapper mapper, LinkGenerator linkGenerator)
         {
-            this.logger = logger;
             this.gameRepository = gameRepository;
             this.mapper = mapper;
             this.linkGenerator = linkGenerator;
+        }
+
+        [HttpGet]///api/s/GameswithSystemAPI/test
+        public async Task<IActionResult> Test()
+        {
+            //add it to database
+            try
+            {
+                return Ok("working");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Failed to save game system");
+            }
         }
 
         [HttpPost]
@@ -39,7 +51,6 @@ namespace GameLibrary.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //gameSystem.GameSystems.SystemName = "PS5";
                     gameSystem.Name = "Name changed in other api";
                     return Ok(gameSystem);
                 }
@@ -50,9 +61,8 @@ namespace GameLibrary.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError($"Failed to save game system:{ex}");
+                return BadRequest("Failed to save game system");
             }
-            return BadRequest("Failed to save game system");
         }
     }
 }
