@@ -52,8 +52,9 @@ namespace GameLibrary.APIControllers
                         return BadRequest($"something wrong");
                     }
                     var data = await response.Content.ReadAsStringAsync();
+                    var element = JsonConvert.DeserializeObject<Games>(data);
 
-                    return Ok($"{data}");
+                    return Ok(element);
                 }
                 else
                 {
