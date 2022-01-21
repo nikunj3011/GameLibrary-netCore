@@ -9,7 +9,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
-using System.IO;
 
 namespace GameLibrary
 {
@@ -17,6 +16,8 @@ namespace GameLibrary
     {
         public static void Main(string[] args)
         {
+            //var host = CreateHostBuilder(args).Build();
+            //RunSeeding(host);
             CreateHostBuilder(args).Build().Run();
         }
 

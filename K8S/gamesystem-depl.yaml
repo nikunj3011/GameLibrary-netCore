@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gamesystemservice-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gamesystemservice
+  template:
+    metadata:
+      labels:
+        app: gamesystemservice
+    spec:
+      containers:
+        - name: gamesystemservice
+          image: nikunj3011/gamesystems:latest
+          imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gamesystem-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: gamesystemservice
+  ports:
+  - name: gamesystemservice
+    protocol: TCP
+    port: 5000
+    targetPort: 5000
