@@ -1,6 +1,7 @@
 ﻿{
   "ConnectionStrings": {
-    "GameConnectionString": "server=localhost\\SQLEXPRESS;Database=GameStoreDb;Integrated Security=true;MultipleActiveResultSets=true;"
+    //"GameConnectionString": "server=localhost\\SQLEXPRESS;Database=GameStoreDb;Integrated Security=true;MultipleActiveResultSets=true;",
+    "GameConnectionString": "Server=mssql-clusterip-srv,1433;Initial Catalog=GameStoreDb;User ID=sa;Password=secretpassword@123D;"
   },
   "Logging": {
     "LogLevel": {
