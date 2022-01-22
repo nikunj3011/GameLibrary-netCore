@@ -28,15 +28,21 @@ namespace GameLibrary
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             _config = configuration;
+            _env = env;
         }
         public IConfiguration _config { get; }
+        private readonly IWebHostEnvironment _env;
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            if (_env.IsProduction())
+            {
+                Console.WriteLine("production sql server");
+            }
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder
@@ -135,10 +141,9 @@ namespace GameLibrary
                 cfg.MapHub<CryptoHub>("/CryptoAPI");
 
                 cfg.MapHub<GameHub>("/gamehub");
-
-
             });
-            
+
+            PrepDbService.PrepPopulation(app, env.IsProduction());
         }
     }
 }
