@@ -23,6 +23,7 @@ using Crypto.API;
 using GameLibrary.SignalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Net.Http.Headers;
+using GameLibrary.APIMessageBusControllers;
 
 namespace GameLibrary
 {
@@ -54,6 +55,7 @@ namespace GameLibrary
             services.Configure<MailSettings>(_config.GetSection("MailSettings")); 
             services.AddSignalR(); //configures app to use signalr
             services.AddTransient<IMailService, Services.MailService>();
+            services.AddSingleton<IMessageBusClient, MessageBusClient>();
             services.AddIdentity<StoreUser, IdentityRole>(cfg=>
             {
                 cfg.User.RequireUniqueEmail = true;

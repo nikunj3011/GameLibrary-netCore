@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GameLibrary.APIMessageBusControllers;
 using GameLibrary.Data;
 using GameLibrary.Data.Entities;
 using GameLibrary.ViewModels;
@@ -23,14 +24,16 @@ namespace GameLibrary.Controllers
         private readonly IMapper _mapper;
         private readonly LinkGenerator linkGenerator;
         private readonly ILogger<GameAPIController> logger;
+        private readonly IMessageBusClient _messageBusClient;
 
         public GameAPIController(IGameRepository gameRepository, IMapper mapper, LinkGenerator linkGenerator,
-            ILogger<GameAPIController> logger)
+            ILogger<GameAPIController> logger, IMessageBusClient messageBusClient)
         {
             _gameRepository = gameRepository;
             _mapper = mapper;
             this.linkGenerator = linkGenerator;
             this.logger = logger;
+            _messageBusClient = messageBusClient;
         }
 
         /// <summary>
@@ -231,10 +234,18 @@ namespace GameLibrary.Controllers
                     };
 
                     //using Automapper
-
                     _gameRepository.AddEntity(newGame);
                     if (await _gameRepository.SaveAll())
                     {
+                        try
+                        {
+                            var gamePublishDto = _mapper.Map<GamePublishedDto>(newGame);
+                            _messageBusClient.Publish(gamePublishDto);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Could not send asyncronously");
+                        }
                         //var vm = new GameSystemAPIViewModel()
                         //{
                         //    CreationDate = newGameSystem.CreationDate,
