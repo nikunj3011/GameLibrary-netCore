@@ -30,3 +30,7 @@ spec:
     protocol: TCP
     port: 5000
     targetPort: 5000
+  - name: gamegrpc
+    protocol: TCP
+    port: 666
+    targetPort: 666
