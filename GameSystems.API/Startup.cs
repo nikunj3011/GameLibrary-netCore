@@ -1,6 +1,8 @@
 using AutoMapper;
 using GameLibrary.Data;
 using GameLibrary.Data.Entities;
+using GameSystems.AsyncDataServices;
+using GameSystems.EventProcessing;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace GameLibrary
@@ -62,7 +65,8 @@ namespace GameLibrary
             });
 
             services.AddTransient<GameSeeder>();
-
+            services.AddSingleton<IEventProcessor, EventProcessor>(); //one rabbitmq processor throughout lifetime of program
+            services.AddHostedService<MessageBusSubscriber>();
             services.AddScoped<IGameRepository, GameRepository>();
 
             //services.AddTransient<IMailService, Services.MailRequest>();

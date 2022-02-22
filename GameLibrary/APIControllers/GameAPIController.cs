@@ -197,6 +197,8 @@ namespace GameLibrary.Controllers
                     {
                         newGame.CreationDate = DateTime.Now;
                     }
+                    newGame.Description = "aaa";
+                    newGame.GameSystemID = 1;
                     _gameRepository.AddEntity(newGame);
                     if (await _gameRepository.SaveAll())
                     {
@@ -232,31 +234,17 @@ namespace GameLibrary.Controllers
                         Name = gameSystem.Name,
                         Rating = gameSystem.Rating
                     };
-
-                    //using Automapper
-                    _gameRepository.AddEntity(newGame);
-                    if (await _gameRepository.SaveAll())
+                    try
                     {
-                        try
-                        {
-                            var gamePublishDto = _mapper.Map<GamePublishedDto>(newGame);
-                            _messageBusClient.Publish(gamePublishDto);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine("Could not send asyncronously");
-                        }
-                        //var vm = new GameSystemAPIViewModel()
-                        //{
-                        //    CreationDate = newGameSystem.CreationDate,
-                        //    GameSystemAPIID = newGameSystem.GameSystemID,
-                        //    SystemNameAPI = newGameSystem.SystemName,
-                        //    GameLibrary = gameSystem.GameLibrary
-                        //};
-
-                        //using Automapper
-                        return Created($"/api/GameAPI/{newGame.GameLibraryID}", true);
+                        var gamePublishDto = _mapper.Map<GamePublishedDto>(newGame);
+                        gamePublishDto.Event = "Game_Published";
+                        _messageBusClient.Publish(gamePublishDto);
                     }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Could not send asyncronously");
+                    }
+                    return Ok("Created");
                 }
                 else
                 {
