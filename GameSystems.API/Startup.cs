@@ -1,8 +1,10 @@
 using AutoMapper;
+using GameLibrary.Controllers;
 using GameLibrary.Data;
 using GameLibrary.Data.Entities;
 using GameSystems.AsyncDataServices;
 using GameSystems.EventProcessing;
+using GameSystems.SyncDataServices.Grpc;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -79,6 +81,7 @@ namespace GameLibrary
                 mc.AddProfile(new GameMappingProfile());
             });
 
+            services.AddScoped<IGameDataClient, GameDataClient>();
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
             //support for real mail afterwards
@@ -118,6 +121,8 @@ namespace GameLibrary
 
 
             });
+
+            GameswithGrpc.Prep(app);
 
         }
     }

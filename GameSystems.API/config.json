@@ -1,6 +1,6 @@
 ﻿{
   "ConnectionStrings": {
-    //"GameConnectionString": "server=localhost\\SQLEXPRESS;Database=GameStoreDb;Integrated Security=true;MultipleActiveResultSets=true;",
+    //"GameConnectionString": "server=localhost\\SQLEXPRESS;Database=GameStoreDb;Integrated Security=true;MultipleActiveResultSets=true;"
     "GameConnectionString": "Server=mssql-clusterip-srv,1433;Initial Catalog=GameStoreDb;User ID=sa;Password=secretpassword@123D;"
   },
   "RabbitMQHost": "rabbitmq-clusterip-srv",
@@ -12,6 +12,8 @@
       "Microsoft": "Warning"
     }
   },
+  //"GrpcGame": "https://localhost:44376",
+  "GrpcGame": "http://games-clusterip-srv:666",
   "Token": {
     "Key": ";aaa;aaa;aaa;aaa;aaa;",
     "Issuer": "https://localhost:44376/",
