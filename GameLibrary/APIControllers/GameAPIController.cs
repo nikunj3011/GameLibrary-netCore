@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GameLibrary.APIMessageBusControllers;
 using GameLibrary.Data;
 using GameLibrary.Data.Entities;
 using GameLibrary.ViewModels;
@@ -23,14 +24,16 @@ namespace GameLibrary.Controllers
         private readonly IMapper _mapper;
         private readonly LinkGenerator linkGenerator;
         private readonly ILogger<GameAPIController> logger;
+        private readonly IMessageBusClient _messageBusClient;
 
         public GameAPIController(IGameRepository gameRepository, IMapper mapper, LinkGenerator linkGenerator,
-            ILogger<GameAPIController> logger)
+            ILogger<GameAPIController> logger, IMessageBusClient messageBusClient)
         {
             _gameRepository = gameRepository;
             _mapper = mapper;
             this.linkGenerator = linkGenerator;
             this.logger = logger;
+            _messageBusClient = messageBusClient;
         }
 
         /// <summary>
@@ -194,6 +197,8 @@ namespace GameLibrary.Controllers
                     {
                         newGame.CreationDate = DateTime.Now;
                     }
+                    newGame.Description = "aaa";
+                    newGame.GameSystemID = 1;
                     _gameRepository.AddEntity(newGame);
                     if (await _gameRepository.SaveAll())
                     {
@@ -229,23 +234,17 @@ namespace GameLibrary.Controllers
                         Name = gameSystem.Name,
                         Rating = gameSystem.Rating
                     };
-
-                    //using Automapper
-
-                    _gameRepository.AddEntity(newGame);
-                    if (await _gameRepository.SaveAll())
+                    try
                     {
-                        //var vm = new GameSystemAPIViewModel()
-                        //{
-                        //    CreationDate = newGameSystem.CreationDate,
-                        //    GameSystemAPIID = newGameSystem.GameSystemID,
-                        //    SystemNameAPI = newGameSystem.SystemName,
-                        //    GameLibrary = gameSystem.GameLibrary
-                        //};
-
-                        //using Automapper
-                        return Created($"/api/GameAPI/{newGame.GameLibraryID}", true);
+                        var gamePublishDto = _mapper.Map<GamePublishedDto>(newGame);
+                        gamePublishDto.Event = "Game_Published";
+                        _messageBusClient.Publish(gamePublishDto);
                     }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Could not send asyncronously");
+                    }
+                    return Ok("Created");
                 }
                 else
                 {

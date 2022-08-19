@@ -23,20 +23,29 @@ using Crypto.API;
 using GameLibrary.SignalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Net.Http.Headers;
+using GameLibrary.APIMessageBusControllers;
+using GameLibrary.Services.Sync;
+using System.IO;
 
 namespace GameLibrary
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             _config = configuration;
+            _env = env;
         }
         public IConfiguration _config { get; }
+        private readonly IWebHostEnvironment _env;
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            if (_env.IsProduction())
+            {
+                Console.WriteLine("production sql server");
+            }
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder
@@ -48,6 +57,7 @@ namespace GameLibrary
             services.Configure<MailSettings>(_config.GetSection("MailSettings")); 
             services.AddSignalR(); //configures app to use signalr
             services.AddTransient<IMailService, Services.MailService>();
+            services.AddSingleton<IMessageBusClient, MessageBusClient>();
             services.AddIdentity<StoreUser, IdentityRole>(cfg=>
             {
                 cfg.User.RequireUniqueEmail = true;
@@ -98,6 +108,7 @@ namespace GameLibrary
                 c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJRWHBvWmtFVUdvMXdheDU3IiwianRpIjoiY2NkOWZkNThlNzEzYzgwMzkyMjllZGJjMzg4OTJlMjY2NWEyMDJhODQ1Njg5OWEwMjZkOWE1ZWNlYTkyMDhmNjhhNWU5OGEyYzBhMjViNjgiLCJpYXQiOjE2MzA1ODc0MjIsIm5iZiI6MTYzMDU4NzQyMiwiZXhwIjoxNjYyMTIzNDIyLCJzdWIiOiJhZG1pbiIsInNjb3BlcyI6WyJGdWxsX0FjY2VzcyIsIk9yZ2FuaXphdGlvbiIsIkVtcGxveWVlcyIsIlRpbWVzaGVldCIsIlBheXJvbGwiLCJQYXlyb2xsX0xvYW5zIl19.MYeqEsJmm1XTYZp3obxoURNhXVXZXYs3sISHay_Jq9MJdIlGiljsrRKap2-kPmUMIeiv-xT89j_r0pv2yiXzazGg1EPZG5RBiy6iheAsJnnW55o2SK0xwtCA33yTRtAAdzaEUgxIebBsU8XXwCYoH0SrNLDqjXRmuWUR6B_-IJwHfOAkrg9moYmsWVQae3CvBXk2NKCRxA6vJ5qdB0UH_PDmkaporJcwlmtOM5bT3Yq3meIhdGjB5iXOQo3uqhuQo4lBpf4QIHStu0lQzGliPZI_3KETzPgW1SXhq8lkY65XgbngDUGR029nfAx_oOzelEK2FHLwuM6ISMtLPLNesA");
             });
 
+            services.AddGrpc();
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
             //support for real mail afterwards
@@ -135,10 +146,14 @@ namespace GameLibrary
                 cfg.MapHub<CryptoHub>("/CryptoAPI");
 
                 cfg.MapHub<GameHub>("/gamehub");
-
-
+                cfg.MapGrpcService<GrpcGameService>();
+                cfg.MapGet("/protos/games.proto", async context =>
+                {
+                    await context.Response.WriteAsync(File.ReadAllText("Protos/games.proto"));
+                });
             });
-            
+
+            PrepDbService.PrepPopulation(app, env.IsProduction());
         }
     }
 }

@@ -1,7 +1,11 @@
 ﻿{
   "ConnectionStrings": {
-    "GameConnectionString": "server=localhost\\SQLEXPRESS;Database=GameStoreDb;Integrated Security=true;MultipleActiveResultSets=true;"
+    //"GameConnectionString": "server=localhost\\SQLEXPRESS;Database=GameStoreDb;Integrated Security=true;MultipleActiveResultSets=true;",
+    "GameConnectionString": "Server=mssql-clusterip-srv,1433;Initial Catalog=GameStoreDb;User ID=sa;Password=secretpassword@123D;"
   },
+  "RabbitMQHost": "rabbitmq-clusterip-srv",
+  //"RabbitMQHost": "localhost",
+  "RabbitMQPort": "5672",
   "Logging": {
     "LogLevel": {
       "Default": "Information",
@@ -26,4 +30,5 @@
     "TenantId": "8a7ccaf2-2020-4811-8efc-342fb80e4c1e"
   },
   "GameSystemAPIService": "http://gamesystem-clusterip-srv:5000"
+  //"GameSystemAPIService": "https://localhost:42155"
 }

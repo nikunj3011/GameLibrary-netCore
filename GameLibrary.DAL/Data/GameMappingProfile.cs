@@ -20,6 +20,14 @@ namespace GameLibrary.Data
             CreateMap<Games, GamesViewModel>()
                 //.ForMember(c=>c.SystemName, o=>o.MapFrom(m=>m.GameSystems.SystemName))
                 .ReverseMap();
+
+            CreateMap<GamesViewModel, GamePublishedDto>()
+                //.ForMember(c=>c.SystemName, o=>o.MapFrom(m=>m.GameSystems.SystemName))
+                .ReverseMap();
+
+            CreateMap<Games, GamePublishedDto>()
+                //.ForMember(c=>c.SystemName, o=>o.MapFrom(m=>m.GameSystems.SystemName))
+                .ReverseMap();
         }
     }
 }

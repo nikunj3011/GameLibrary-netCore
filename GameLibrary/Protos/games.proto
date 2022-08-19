@@ -1,0 +1,21 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "GameLibrary";
+
+service GrpcGame{
+	rpc GetAllGames(GetAllRequest) returns ( GameResponseModel);
+}
+message GetAllRequest {}
+
+message GrpcGameModel
+{
+	int32 gameId = 1;
+	string name = 2;
+    int32 Rating = 3;
+    string DiscType = 4;
+}
+
+message GameResponseModel
+{
+	repeated GrpcGameModel game = 1;
+}
