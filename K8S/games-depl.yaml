@@ -2,6 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gameservice-depl
+  namespace: default
+  labels:
+    app: gameservice
+    type: back-end
 spec:
   replicas: 1
   selector:
@@ -16,6 +20,7 @@ spec:
         - name: gameservice
           image: nikunj3011/games:latest
           imagePullPolicy: Never
+          
 ---
 apiVersion: v1
 kind: Service

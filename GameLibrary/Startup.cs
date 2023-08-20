@@ -153,7 +153,7 @@ namespace GameLibrary
                 });
             });
 
-            PrepDbService.PrepPopulation(app, env.IsProduction());
+            //PrepDbService.PrepPopulation(app, env.IsProduction());
         }
     }
 }

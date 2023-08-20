@@ -32,7 +32,7 @@ namespace GameLibrary
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseKestrel(options => { options.Listen(IPAddress.Any, 5000); });
+                    webBuilder.UseKestrel(options => { options.Listen(IPAddress.Any, 1234); });
                 });
 
         private static void SetupConfiguration(HostBuilderContext ctx, IConfigurationBuilder builder)

@@ -15,3 +15,5 @@ Build Docker image by running
 docker build -t gamelibrary .
 
 docker run -p 8080:80 -d nikunj3011/gamelibrary
+
+C:\Windows\System32\drivers\etc
